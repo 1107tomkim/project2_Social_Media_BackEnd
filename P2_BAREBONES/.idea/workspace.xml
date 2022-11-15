@@ -5,33 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14540ac6-6f96-48b1-8cfd-c0859667aace" name="Changes" comment="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;ERS_Project/.idea/workspace.xml&#10;#&#9;ERS_Project/src/main/java/dev/hammet/controllers/EmployeeController.java&#10;#&#9;ERS_Project/src/main/java/dev/hammet/controllers/ReimbursementRequestController.java&#10;#&#9;ERS_Project/src/main/java/dev/hammet/repositories/EmployeeDAOPostgres.java&#10;#&#9;ERS_Project/target/classes/dev/hammet/controllers/EmployeeController.class&#10;#&#9;ERS_Project/target/classes/dev/hammet/controllers/ReimbursementRequestController.class">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/jsonmusk/entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/jsonmusk/entities/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dev/jsonmusk/repositories/UserDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dev/jsonmusk/repositories/UserDAOTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/CommentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/controllers/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/driver/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/driver/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/Post.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/entities/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/CommentDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/CommentDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/CommentDAOPostgres.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/CommentDAOPostgres.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/PostDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/PostDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/PostDAOPostgres.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/PostDAOPostgres.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/UserDAOPostgres.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/repositories/UserDAOPostgres.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/CommentServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/CommentServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/PostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/PostService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/PostServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/PostServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/services/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dev/jsonmusk/util/ConnectionFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dev/jsonmusk/util/ConnectionFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/repositories/PostDAOTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/repositories/PostDAOTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/repositories/UserDAOTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/repositories/UserDAOTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/smoketests/ConnectionTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dev/jsonmusk/smoketests/ConnectionTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
