@@ -66,6 +66,7 @@ public class PostDAOPostgres implements PostDAO {
 
     @Override
     public List<Post> getFeed() {
+        // this returns all posts
         try(Connection connection = ConnectionFactory.getConnection()){
             String sql = "select * from posts order by date_created";
             PreparedStatement ps = connection.prepareStatement(sql);
