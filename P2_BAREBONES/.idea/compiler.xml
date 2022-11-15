@@ -10,5 +10,8 @@
         <module name="p2_barebones" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="P2_BAREBONES" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

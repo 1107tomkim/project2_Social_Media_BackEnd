@@ -26,7 +26,7 @@ class UserDAOTest {
 
     @Test
     void createUser() {
-        User testuser = new User(0, "testing", "password", false);
+        User testuser = new User(0, "tester", "password", false);
         User savedUser = userDAO.createUser(testuser);
         Assertions.assertNotNull(savedUser);
         Assertions.assertEquals(testuser.getUsername(), savedUser.getUsername());

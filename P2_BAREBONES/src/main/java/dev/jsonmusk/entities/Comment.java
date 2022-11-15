@@ -12,17 +12,12 @@ public class Comment {
 
     private int postId;
 
+
     public Comment() {
-        this.id = 0;
-        this.userId = 0;
-        this.text = "";
-        this.date = null;
-        this.parentId = 0;
-        this.postId = 0;
     }
 
-    public Comment(int id, int userId, String text, Date date, int parentId, int postId) {
-        this.id = id;
+    public Comment(int comment_id, int userId, String text, Timestamp date, int parentId, int postId) {
+        this.comment_id = comment_id;
         this.userId = userId;
         this.text = text;
         this.date = date;
@@ -30,12 +25,24 @@ public class Comment {
         this.postId = postId;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "comment_id=" + comment_id +
+                ", userId=" + userId +
+                ", text='" + text + '\'' +
+                ", date=" + date +
+                ", parentId=" + parentId +
+                ", postId=" + postId +
+                '}';
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(int comment_id) {
+        this.comment_id = comment_id;
     }
 
     public int getUserId() {
@@ -54,11 +61,11 @@ public class Comment {
         this.text = text;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -77,18 +84,4 @@ public class Comment {
     public void setPostId(int postId) {
         this.postId = postId;
     }
-
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", text='" + text + '\'' +
-                ", date=" + date +
-                ", parentId=" + parentId +
-                ", postId=" + postId +
-                '}';
-    }
-
 }
