@@ -37,10 +37,11 @@ public class PostController {
     public Handler getFeedHandler = (ctx) -> {
       // Will return all the posts in Chronological order
         List<Post> feed = Driver.postService.getFeed();
+
         if (feed != null) {
             Gson gson = new Gson();
             ctx.status(200);
-            ctx.result(gson.toJson(feed, Post.class));
+            ctx.result(gson.toJson(feed));
         }
         else {
             ctx.result("ERROR!! CAN NOT FIND FEED!!");
