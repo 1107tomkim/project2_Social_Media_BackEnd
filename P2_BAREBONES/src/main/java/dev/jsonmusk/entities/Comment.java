@@ -12,17 +12,38 @@ public class Comment {
 
     private int postId;
 
+    private int liked = 0;
+
+    private int disliked = 0;
 
     public Comment() {
     }
 
-    public Comment(int comment_id, int userId, String text, Timestamp date, int parentId, int postId) {
+    public Comment(int comment_id, int userId, String text, Timestamp date, int parentId, int postId, int liked, int disliked) {
         this.comment_id = comment_id;
         this.userId = userId;
         this.text = text;
         this.date = date;
         this.parentId = parentId;
         this.postId = postId;
+        this.liked = liked;
+        this.disliked = disliked;
+    }
+
+    public int getLiked() {
+        return liked;
+    }
+
+    public void setLiked(int liked) {
+        this.liked = liked;
+    }
+
+    public int getDisliked() {
+        return disliked;
+    }
+
+    public void setDisliked(int disliked) {
+        this.disliked = disliked;
     }
 
     @Override
@@ -34,6 +55,8 @@ public class Comment {
                 ", date=" + date +
                 ", parentId=" + parentId +
                 ", postId=" + postId +
+                ", liked=" + liked +
+                ", disliked=" + disliked +
                 '}';
     }
 

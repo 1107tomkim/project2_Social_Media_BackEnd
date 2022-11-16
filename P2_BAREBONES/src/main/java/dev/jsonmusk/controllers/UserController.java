@@ -17,7 +17,7 @@ public class UserController {
 
         int returnval = Driver.userService.login(user.getUsername(), user.getPassword());
         if (returnval == 2) {
-            ctx.status(200);
+            ctx.status(201);
             ctx.result("something is good " + returnval);
         }
         else if (returnval == 1) {

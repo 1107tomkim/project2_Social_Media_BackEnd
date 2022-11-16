@@ -50,7 +50,7 @@ public class Driver {
 
         //Post Path
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
-
+        app.get("/posts", postController.getFeedHandler);
 
 
 
