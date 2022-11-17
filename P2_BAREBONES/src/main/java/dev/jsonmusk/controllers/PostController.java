@@ -3,6 +3,7 @@ package dev.jsonmusk.controllers;
 import com.google.gson.Gson;
 import dev.jsonmusk.driver.Driver;
 import dev.jsonmusk.entities.Post;
+import dev.jsonmusk.entities.User;
 import io.javalin.http.Handler;
 
 import java.util.List;
@@ -11,12 +12,25 @@ public class PostController {
 
 
     public Handler createPostHandler = (ctx) -> {
-        String json = ctx.body();
-        Gson gson = new Gson();
-        Post newPost = gson.fromJson(json, Post.class);
-        Post createdPost = Driver.postService.createPost(newPost);
-        ctx.result("Account successfully created!");
-        ctx.status(200);
+        String username = ctx.pathParam("username");
+        User userByParam = Driver.userService.getUserByUsername(username);
+        System.out.println(userByParam);
+        int id = userByParam.getId();
+        boolean isCurrentLoggedIn = userByParam.isLoggedIn();
+        System.out.println(isCurrentLoggedIn);
+        System.out.println(id);
+        if (isCurrentLoggedIn){
+            System.out.println("you are allowed to post");
+        }
+        else {
+            System.out.println("please log in");
+        }
+//        String json = ctx.body();
+//        Gson gson = new Gson();
+//        Post newPost = gson.fromJson(json, Post.class);
+//        Post createdPost = Driver.postService.createPost(newPost);
+//        ctx.result("post successfully created!");
+//        ctx.status(200);
     };
 
     public Handler getPostbyIdHandler = (ctx) -> {

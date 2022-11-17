@@ -21,11 +21,11 @@ public class Post {
     private byte[] postPhoto;
 
     public Post() {
-        this.postText = "";
-        this.postId = 0;
-        this.userId = 0;
-        this.date = null;
-        this.postPhoto = null;
+//        this.postText = "";
+//        this.postId = 0;
+//        this.userId = 0;
+//        this.date = null;
+//        this.postPhoto = null;
     }
     public Post(int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
         this.postText = postText;

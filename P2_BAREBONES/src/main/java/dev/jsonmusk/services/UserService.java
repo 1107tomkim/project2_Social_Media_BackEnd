@@ -14,6 +14,8 @@ public interface UserService {
     User getUserById(int id);
     User getUserByUsername(String username);
 
+    User getUserIdByUsername(User user);
+
     //UPDATE
     User updateUser(User user);
 
