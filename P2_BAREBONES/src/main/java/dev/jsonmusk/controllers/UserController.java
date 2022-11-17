@@ -14,19 +14,20 @@ public class UserController {
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
+        //System.out.println("this is what they entered: " + user);
+        User checkPassword = Driver.userService.getUserByUsername(user.getUsername());
+        //System.out.println("this is what we are expecting: " + checkPassword);
+        System.out.println(checkPassword.getPassword());
+        System.out.println(user.getPassword());
 
-        int returnval = Driver.userService.login(user.getUsername(), user.getPassword());
-        if (returnval == 2) {
-            ctx.status(201);
-            ctx.result("something is good " + returnval);
-        }
-        else if (returnval == 1) {
-            ctx.status(401);
-            ctx.result("something is bad " + returnval);
+        if (user.getPassword().equals(checkPassword.getPassword())){
+            // update user login
+            //
+            Driver.userService.login(user);
+            ctx.result("something good happened");
         }
         else {
-            ctx.status(400);
-            ctx.result("something is bad " + returnval);
+            ctx.result("something bad");
         }
     };
 
@@ -35,13 +36,18 @@ public class UserController {
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
-
-        int returnval = Driver.userService.logout(user.getUsername(), user.getPassword());
-        if (returnval == 2) {
+        System.out.println(user);
+        //String username = ctx.pathParam("username");
+        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user));
+        System.out.println(userByParam);
+        if (userByParam.isLoggedIn()){
+            User fullUser = Driver.userService.getUserByUsername(String.valueOf(userByParam));
+            System.out.println("logoutHandler objects prints:  "+ fullUser);
+            Driver.userService.logout(fullUser);
             ctx.status(200);
             ctx.result("logged out");
         }
-        else {
+        else{
             ctx.status(400);
             ctx.result("Could not log out");
         }

@@ -14,14 +14,13 @@ public interface UserService {
     User getUserById(int id);
     User getUserByUsername(String username);
 
-    User getUserIdByUsername(User user);
 
     //UPDATE
     User updateUser(User user);
 
-    int login(String username, String password);
+    User login(User user);
 
-    int logout(String username, String password);
+    User logout(User user);
 
     //DELETE
 

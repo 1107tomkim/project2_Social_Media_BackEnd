@@ -14,11 +14,20 @@ public class User {
     public User() {
 
     }
+
+    public User(String username){
+        this.username = username;
+    }
     public User(int id, String username, String password, boolean isLoggedIn) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.isLoggedIn = false;
+    }
+
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
     public User(int id, String username, String password, boolean isLoggedIn, String firstname, String lastname, String email) {
