@@ -6,10 +6,17 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     public static Connection getConnection() {
+        // for Alec
+        //////////////////////////////////////////////////////////////////////////////////////
+        String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=p5";
+        String username = "postgres";
+        String password = "password";
 
-        String url = System.getenv("POSTGRES_SQL_DB");
-        String username = System.getenv("DB_USERNAME");
-        String password = System.getenv("PASSWORD");
+        // for not Alec
+        //////////////////////////////////////////////
+        //String url = System.getenv("POSTGRES_SQL_DB");
+        //String username = System.getenv("DB_USERNAME");
+        //String password = System.getenv("PASSWORD");
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {

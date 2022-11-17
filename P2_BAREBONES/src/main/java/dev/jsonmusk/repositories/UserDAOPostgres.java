@@ -113,6 +113,26 @@ public class UserDAOPostgres implements UserDAO {
         }
         return null;
     }
+
+    @Override
+    public User login(User user) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "update users set islogged = ? where user_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, user.isLoggedIn());
+            ps.setInt(2, user.getId());
+
+            ps.executeUpdate();
+            System.out.println("dao Logs in");
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+        //log in
+    }
+
     @Override
     public User updateUserLogin(User user) {
         try (Connection connection = ConnectionFactory.getConnection()) {
@@ -132,7 +152,30 @@ public class UserDAOPostgres implements UserDAO {
     }
 
     @Override
-    public void logout() {
-        //log out
+    public User logout(User user) {
+        System.out.println("akjgsfkjbgfkgg");
+        System.out.println(user.isLoggedIn());
+        System.out.println(user.getId());
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "update users set islogged = ? where user_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+
+            ps.setBoolean(1, user.isLoggedIn());
+            ps.setInt(2, user.getId());
+
+            ps.executeUpdate();
+//            ResultSet rs = ps.executeQuery();
+//            rs.next();
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+        //log in
     }
+
+
+
 }

@@ -28,43 +28,62 @@ public class UserServiceImpl implements UserService {
         return this.userDAO.getUserByUsername(username);
     }
 
+
+
     @Override
     public User updateUser(User user) {
         return this.userDAO.updateUser(user);
     }
 
     @Override
-    public int login(String username, String password) {
-        int returnval = 0;
-        User checkUser = Driver.userService.getUserByUsername(username);
-        if (checkUser != null) {
-            if (checkUser.getPassword().equals(password)) {
-                returnval = 2;
-                checkUser.setLoggedIn(true);
-                User loggedInUser = this.userDAO.updateUserLogin(checkUser);
-            } else {
-                returnval = 1;
-            }
-        } else {
-            returnval = 0;
-        }
-        System.out.println(returnval);
-        return returnval;
+    public User login(User user) {
+        return this.userDAO.login(user);
     }
 
+
+
+
+//    @Override
+//    public int login(String username, String password) {
+//        int returnval = 0;
+//        User checkUser = Driver.userService.getUserByUsername(username);
+//        if (checkUser.isLoggedIn() == false) {
+//            if (checkUser.getPassword().equals(password)) {
+//                returnval = 2;
+//                checkUser.setLoggedIn(true);
+//                System.out.println("this is checkUser"+ checkUser);
+//
+//                // update user login?
+//
+//                //User loggedInUser = this.userDAO.updateUserLogin(checkUser);
+//            } else {
+//                System.out.println("incorrect password or email");
+//                returnval = 1;
+//            }
+//        } else {
+//            System.out.println("you are already logged in");
+//            returnval = 0;
+//        }
+//        //System.out.println(checkUser);
+//        //System.out.println(returnval);
+//        return returnval;
+//    }
+
     @Override
-    public int logout(String username, String password) {
-        int returnval = 0;
-        User checkUser = Driver.userService.getUserByUsername(username);
-        if (checkUser != null) {
-            checkUser.setLoggedIn(false);
-            User loggedInUser = this.userDAO.updateUserLogin(checkUser);
-            returnval = 2;
+    public User logout(User user) {
+        //int returnval = 0;
+        //User checkUser = Driver.userService.getUserByUsername(user.getUsername());
+
+        System.out.println("userImpl object is printing: "+user);
+        if (user.isLoggedIn()) {
+            //checkUser.setLoggedIn(false);
+            user.setLoggedIn(false);
+            return user;
         }
         else {
-            returnval = 1;
+            System.out.println("you are not logged in");
         }
-        return returnval;
+        return user;
     }
 
 }
