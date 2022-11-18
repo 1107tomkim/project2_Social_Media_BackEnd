@@ -30,6 +30,7 @@ public class User {
         this.password = password;
     }
 
+
     public User(int id, String username, String password, boolean isLoggedIn, String firstname, String lastname, String email) {
         this.id = id;
         this.username = username;

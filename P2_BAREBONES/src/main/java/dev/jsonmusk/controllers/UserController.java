@@ -36,16 +36,17 @@ public class UserController {
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
-        System.out.println(user);
+        //System.out.println(user);
         //String username = ctx.pathParam("username");
-        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user));
-        System.out.println(userByParam);
+        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user.getUsername()));
+        //System.out.println(userByParam);
         if (userByParam.isLoggedIn()){
-            User fullUser = Driver.userService.getUserByUsername(String.valueOf(userByParam));
-            System.out.println("logoutHandler objects prints:  "+ fullUser);
-            Driver.userService.logout(fullUser);
+            System.out.println("logoutHandler objects prints:  "+ userByParam);
+            Driver.userService.logout(userByParam);
+            System.out.println("logged out: " + userByParam);
             ctx.status(200);
             ctx.result("logged out");
+
         }
         else{
             ctx.status(400);
