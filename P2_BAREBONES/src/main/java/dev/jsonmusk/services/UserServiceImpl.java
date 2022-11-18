@@ -83,15 +83,6 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User logout(User user) {
-//        if (user.isLoggedIn()) {
-//            user.setLoggedIn(false);
-//            userDAO.logout(user);
-//            return user;
-//        }
-//        else {
-//            System.out.println("you are not logged in");
-//        }
-//        return user;
 
         int returnval = 0;
         if (user != null) {

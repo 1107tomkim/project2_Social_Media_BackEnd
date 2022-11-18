@@ -10,7 +10,7 @@ public class Post {
 
     private String postText;
 
-
+    private String username;
     private int postId;
     private int userId;
 
@@ -21,31 +21,50 @@ public class Post {
     private byte[] postPhoto;
 
     public Post() {
-//        this.postText = "";
-//        this.postId = 0;
-//        this.userId = 0;
+    }
+//    public Post(int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
+//        this.postText = postText;
+//        this.postId = postId;
+//        this.userId = userId;
 //        this.date = null;
 //        this.postPhoto = null;
-    }
-    public Post(int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
+//    }
+    public Post(String username, int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
         this.postText = postText;
+        this.username = username;
         this.postId = postId;
         this.userId = userId;
         this.date = null;
         this.postPhoto = null;
     }
 
+    public Post(String postText, String username){
+        this.postText = postText;
+        this.username = username;
+    }
+
+
     @Override
     public String toString() {
         return "Post{" +
                 "postText='" + postText + '\'' +
                 ", postId=" + postId +
+                ", username=" + username +
                 ", userId=" + userId +
                 ", liked=" + liked +
                 ", disliked=" + disliked +
                 ", date=" + date +
                 ", postPhoto=" + Arrays.toString(postPhoto) +
                 '}';
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setDate(Timestamp date) {

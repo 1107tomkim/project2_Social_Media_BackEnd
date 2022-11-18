@@ -54,10 +54,16 @@ public class UserController {
             ctx.status(400);
             ctx.result("No user");
         } else {
+
+            // switch user repo islogged boolean value
+            // AND delete from session repo
             User returnUser = Driver.userService.logout(user);
 
             if (returnUser != null) {
+
+                //get rid of jwt cookie
                 eraseCookie(ctx, "jwt");
+
                 ctx.status(200);
                 ctx.result("logged out");
             }
