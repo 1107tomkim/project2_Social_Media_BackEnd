@@ -75,6 +75,12 @@ public class Driver {
 
 
 
+        //Comment Path
+        app.post("/comment", commentController.createCommentHandler);
+        app.get("/comment/{id}", commentController.getCommentByIdHandler);
+        app.get("/comments/{post_id}", commentController.getAllCommentsOfPostId);
+        app.put("/comment/{user_id}", commentController.updateCommentHandler);
+
 
 
 
