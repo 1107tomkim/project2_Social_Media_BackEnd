@@ -9,28 +9,21 @@ import io.javalin.http.Handler;
 import java.util.List;
 
 public class PostController {
-
-
     public Handler createPostHandler = (ctx) -> {
-        String username = ctx.pathParam("username");
-        User userByParam = Driver.userService.getUserByUsername(username);
-        System.out.println(userByParam);
-        int id = userByParam.getId();
-        boolean isCurrentLoggedIn = userByParam.isLoggedIn();
-        System.out.println(isCurrentLoggedIn);
-        System.out.println(id);
-        if (isCurrentLoggedIn){
-            System.out.println("you are allowed to post");
+        String json = ctx.body();
+        Gson gson = new Gson();
+        Post newPost = gson.fromJson(json, Post.class);
+        User userByParam = Driver.userService.getUserByUsername(newPost.getUsername());
+        if (userByParam.isLoggedIn()){
+            newPost.setUserId(userByParam.getId());
+            Driver.postService.createPost(newPost);
+            ctx.result("You just posted again. maybe take a break.");
+            ctx.status(400);
         }
         else {
-            System.out.println("please log in");
+            ctx.result("Please log in to post");
+            ctx.status(400);
         }
-//        String json = ctx.body();
-//        Gson gson = new Gson();
-//        Post newPost = gson.fromJson(json, Post.class);
-//        Post createdPost = Driver.postService.createPost(newPost);
-//        ctx.result("post successfully created!");
-//        ctx.status(200);
     };
 
     public Handler getPostbyIdHandler = (ctx) -> {

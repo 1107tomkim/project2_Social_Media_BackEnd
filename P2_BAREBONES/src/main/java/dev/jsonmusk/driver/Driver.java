@@ -49,7 +49,7 @@ public class Driver {
 
 
         //Post Path
-        app.post("/post/{username}", postController.createPostHandler);
+        app.post("/post", postController.createPostHandler);
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
         app.get("/posts", postController.getFeedHandler);
 

@@ -10,12 +10,15 @@ public class Post {
 
     private String postText;
 
+    private String username;
+
 
     private int postId;
     private int userId;
 
     private int liked;
     private int disliked;
+
 
     private Timestamp date;
     private byte[] postPhoto;
@@ -27,12 +30,18 @@ public class Post {
 //        this.date = null;
 //        this.postPhoto = null;
     }
-    public Post(int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
+    public Post(String username, int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
         this.postText = postText;
+        this.username = username;
         this.postId = postId;
         this.userId = userId;
         this.date = null;
         this.postPhoto = null;
+    }
+
+    public Post(String postText, String username){
+        this.postText = postText;
+        this.username = username;
     }
 
     @Override
@@ -40,6 +49,7 @@ public class Post {
         return "Post{" +
                 "postText='" + postText + '\'' +
                 ", postId=" + postId +
+                ", username=" + username +
                 ", userId=" + userId +
                 ", liked=" + liked +
                 ", disliked=" + disliked +
@@ -56,6 +66,13 @@ public class Post {
         return date;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getLiked() {
         return liked;
