@@ -51,7 +51,8 @@ public class PostDAOPostgres implements PostDAO {
             Post post = new Post();
             post.setPostText(rs.getString("post_text"));
             post.setPostId(id);
-            post.setUserId(rs.getInt("createdby"));
+            post.setUserId(rs.getInt("createdBy"));
+            post.setUsername(rs.getString("createdByName"));
             post.setDate(rs.getTimestamp("date_created"));
             post.setPostPhoto(rs.getBytes("post_photo"));
             post.setLiked(rs.getInt("liked"));
@@ -68,7 +69,7 @@ public class PostDAOPostgres implements PostDAO {
     public List<Post> getFeed() {
         // this returns all posts
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from posts order by created_at";
+            String sql = "select * from posts order by date_created";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             List<Post> feed = new ArrayList<>();
@@ -76,8 +77,9 @@ public class PostDAOPostgres implements PostDAO {
                 Post post = new Post();
                 post.setPostText(rs.getString("post_text"));
                 post.setPostId(rs.getInt("post_id"));
-                post.setUserId(rs.getInt("created_by"));
-                post.setDate(rs.getTimestamp("created_at"));
+                post.setUserId(rs.getInt("createdBy"));
+                post.setUsername(rs.getString("createdByName"));
+                post.setDate(rs.getTimestamp("date_created"));
                 post.setPostPhoto(rs.getBytes("post_photo"));
                 post.setLiked(rs.getInt("liked"));
                 post.setDisliked(rs.getInt("disliked"));

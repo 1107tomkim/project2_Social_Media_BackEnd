@@ -102,9 +102,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByAuthToken(String token) {
 
-        int id = this.sessionDAO.getUserIdByToken(token);
-        User user = this.userDAO.getUserById(id);
 
+        int id = this.sessionDAO.getUserIdByToken(token);
+
+        if (id <= 0 )
+            return null;
+
+        User user = this.userDAO.getUserById(id);
         return user;
     }
 
