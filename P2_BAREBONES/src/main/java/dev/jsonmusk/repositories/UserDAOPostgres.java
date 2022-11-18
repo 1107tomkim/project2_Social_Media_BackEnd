@@ -66,6 +66,7 @@ public class UserDAOPostgres implements UserDAO {
 
     @Override
     public User getUserByUsername(String username) {
+
         try (Connection connection = ConnectionFactory.getConnection()) {
             String sql = "select * from users where username=?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -82,6 +83,7 @@ public class UserDAOPostgres implements UserDAO {
             gottenUser.setLastname(rs.getString("lastname"));
             gottenUser.setEmail(rs.getString("email"));
             gottenUser.setLoggedIn(rs.getBoolean("isLogged"));
+
             return gottenUser;
 
         } catch (SQLException e) {
@@ -114,6 +116,23 @@ public class UserDAOPostgres implements UserDAO {
         return null;
     }
 
+    @Override
+    public User updateUserLogin(User user) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "update users set islogged = ? where user_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, user.isLoggedIn());
+            ps.setInt(2, user.getId());
+
+            ps.executeUpdate();
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+        //log in
+    }
     @Override
     public User login(User user) {
         try (Connection connection = ConnectionFactory.getConnection()) {

@@ -1,15 +1,27 @@
 package dev.jsonmusk.services;
 
 import dev.jsonmusk.driver.Driver;
+import dev.jsonmusk.entities.Session;
 import dev.jsonmusk.entities.User;
+import dev.jsonmusk.managers.TokenManager;
+import dev.jsonmusk.repositories.SessionDAO;
 import dev.jsonmusk.repositories.UserDAO;
 
 
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
-    public UserServiceImpl(UserDAO userDAO){
+    private TokenManager tokenManager;
+
+    private SessionDAO sessionDAO;
+    public UserServiceImpl(UserDAO userDAO, SessionDAO sessionDAO, TokenManager tokenManager){
         this.userDAO = userDAO;
+
+        this.sessionDAO = sessionDAO;
+
+        this.tokenManager = tokenManager;
+
+
     }
 
 
@@ -36,21 +48,88 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(User user) {
-        return this.userDAO.login(user);
+    public Session login(String username, String password) {
+        // int returnval = 0;
+        User checkUser = Driver.userService.getUserByUsername(username);
+        System.out.println(checkUser);
+        if (checkUser != null) {
+            if (checkUser.getPassword().equals(password)) {
+                //  returnval = 2;
+
+
+                checkUser.setLoggedIn(true);
+                User loggedInUser = this.userDAO.updateUserLogin(checkUser);
+
+                // authorization stuff
+                //   String userId = user.getUserId();
+                String token = tokenManager.issueTokenToUserId(checkUser.getId());
+
+                System.out.println(token);
+                Session session = new Session(checkUser.getId(), token);
+
+
+                this.sessionDAO.createAuth(checkUser, session);
+
+
+                return session;
+            }
+        }  else {
+            //  returnval = 0;
+            return null;
+        }
+        //  System.out.println(returnval);
+        //   return returnval;
+        return null;
+    }
+    @Override
+    public User logout(User user) {
+//        if (user.isLoggedIn()) {
+//            user.setLoggedIn(false);
+//            userDAO.logout(user);
+//            return user;
+//        }
+//        else {
+//            System.out.println("you are not logged in");
+//        }
+//        return user;
+
+        int returnval = 0;
+        if (user != null) {
+            user.setLoggedIn(false);
+            User loggedOutUser = this.userDAO.updateUserLogin(user);
+
+            this.sessionDAO.deleteAuthByUserId(user.getId());
+
+            return loggedOutUser;
+        }
+        else {
+            return null;
+        }
+
     }
 
     @Override
-    public User logout(User user) {
-        if (user.isLoggedIn()) {
-            user.setLoggedIn(false);
-            userDAO.logout(user);
-            return user;
-        }
-        else {
-            System.out.println("you are not logged in");
-        }
+    public User getUserByAuthToken(String token) {
+
+        int id = this.sessionDAO.getUserIdByToken(token);
+        User user = this.userDAO.getUserById(id);
+
         return user;
+    }
+
+    @Override
+    public Session getSessionByUserId(int id) {
+
+        Session session = this.sessionDAO.getSessionByUserId(id);
+
+        return session;
+    }
+
+
+    @Override
+    public boolean authorize(String token, int userId) {
+        boolean result = tokenManager.authorize(token, userId);
+        return result;
     }
 
 }

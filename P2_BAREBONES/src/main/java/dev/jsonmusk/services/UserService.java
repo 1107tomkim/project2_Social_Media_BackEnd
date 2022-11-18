@@ -1,5 +1,6 @@
 package dev.jsonmusk.services;
 
+import dev.jsonmusk.entities.Session;
 import dev.jsonmusk.entities.User;
 
 import java.util.List;
@@ -18,7 +19,12 @@ public interface UserService {
     //UPDATE
     User updateUser(User user);
 
-    User login(User user);
+    Session login(String username, String password);
+    User getUserByAuthToken(String token);
+
+    Session getSessionByUserId(int id);
+
+    boolean authorize (String token, int userId);
 
     User logout(User user);
 

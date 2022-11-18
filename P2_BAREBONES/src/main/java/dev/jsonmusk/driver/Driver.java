@@ -3,14 +3,16 @@ package dev.jsonmusk.driver;
 import dev.jsonmusk.controllers.CommentController;
 import dev.jsonmusk.controllers.PostController;
 import dev.jsonmusk.controllers.UserController;
+import dev.jsonmusk.managers.TokenManagerImpl;
 import dev.jsonmusk.repositories.CommentDAOPostgres;
 import dev.jsonmusk.repositories.PostDAOPostgres;
+import dev.jsonmusk.repositories.SessionDAOPostgres;
 import dev.jsonmusk.services.*;
 import io.javalin.Javalin;
 import dev.jsonmusk.repositories.UserDAOPostgres;
 
 public class Driver {
-    public static UserService userService = new UserServiceImpl(new UserDAOPostgres());
+    public static UserService userService = new UserServiceImpl( new UserDAOPostgres(), new SessionDAOPostgres(), new TokenManagerImpl() );
 
     public static PostService postService = new PostServiceImpl(new PostDAOPostgres());
 
@@ -42,8 +44,25 @@ public class Driver {
         //Creating new users
         app.post("/create", userController.createUserHandler);
         app.post("/logout", userController.logoutHandler);
-        app.get("/user/{id}", userController.getUserByIdHandler);
-        app.put("/user", userController.updateUserHandler);
+
+
+        //Restricting access to ('/api') routes via an "authorize handler"
+        app.before("/api/*", userController.authorizeHandler);
+
+        //Getting the current user
+        app.get("/api/user", userController.getUserHandler);
+
+
+
+        // post stuff ---
+        // Creating a new post
+        app.post("/api/post", postController.createPostHandler);
+
+
+
+
+     //   app.get("/user/{id}", userController.getUserByIdHandler);
+     //   app.put("/user", userController.updateUserHandler);
 
 
 
@@ -51,7 +70,8 @@ public class Driver {
         //Post Path
         app.post("/post/{username}", postController.createPostHandler);
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
-        app.get("/posts", postController.getFeedHandler);
+
+        app.get("/api/posts", postController.getFeedHandler);
 
 
 

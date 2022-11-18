@@ -2,10 +2,10 @@ package dev.jsonmusk.controllers;
 
 import com.google.gson.Gson;
 import dev.jsonmusk.driver.Driver;
+import dev.jsonmusk.entities.Session;
 import dev.jsonmusk.entities.User;
 import dev.jsonmusk.repositories.UserDAO;
-import io.javalin.http.Context;
-import io.javalin.http.Handler;
+import io.javalin.http.*;
 
 public class UserController {
 
@@ -13,30 +13,99 @@ public class UserController {
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
-        User checkPassword = Driver.userService.getUserByUsername(user.getUsername());
-        if (user.getPassword().equals(checkPassword.getPassword()) && !checkPassword.isLoggedIn()){
-            Driver.userService.login(checkPassword);
-            ctx.result("something good happened");
-        }
-        else {
-            ctx.result("username or password are incorrect");
-        }
+
+
+        Session session = Driver.userService.login(user.getUsername(), user.getPassword());
+        // ctx.json(authorization);
+        Cookie cookie = new Cookie("jwt",
+                session.getToken(),
+                "/", -1
+                , true, 1, true, null, null, SameSite.LAX);
+        ctx.cookie(cookie);
+
+//        User checkPassword = Driver.userService.getUserByUsername(user.getUsername());
+//        if (user.getPassword().equals(checkPassword.getPassword()) && !checkPassword.isLoggedIn()){
+//            Driver.userService.login(checkPassword);
+//            ctx.result("something good happened");
+//        }
+//        else {
+//            ctx.result("username or password are incorrect");
+//        }
     };
 
     public Handler logoutHandler = (ctx) -> {
         String json = ctx.body();
         Gson gson = new Gson();
-        User user = gson.fromJson(json, User.class);
-        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user.getUsername()));
-        if (userByParam.isLoggedIn()){
-            Driver.userService.logout(userByParam);
-            ctx.status(200);
-            ctx.result("logged out");
-        }
-        else{
+        User passedUser = gson.fromJson(json, User.class);
+//        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user.getUsername()));
+//        if (userByParam.isLoggedIn()){
+//            Driver.userService.logout(userByParam);
+//            ctx.status(200);
+//            ctx.result("logged out");
+//        }
+//        else{
+//            ctx.status(400);
+//            ctx.result("Could not log out");
+//        }
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+        if (user == null) {
             ctx.status(400);
-            ctx.result("Could not log out");
+            ctx.result("No user");
+        } else {
+            User returnUser = Driver.userService.logout(user);
+
+            if (returnUser != null) {
+                eraseCookie(ctx, "jwt");
+                ctx.status(200);
+                ctx.result("logged out");
+            }
+            else {
+                ctx.status(400);
+                ctx.result("Could not log out");
+            }
         }
+
+
+
+    };
+
+
+    private void eraseCookie(Context ctx, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, "", "/", 0,
+                true, 1, true, null, null, SameSite.STRICT);
+        ctx.cookie(cookie);
+
+    }
+
+    public Handler authorizeHandler = (ctx) -> {
+
+        // gets the current user based on the web token in browser cookies
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
+        if (token == null){
+            throw new ForbiddenResponse("NO TOKEN!");
+        }
+        boolean result = Driver.userService.authorize(token, user.getId());
+        if (!result){
+            throw new ForbiddenResponse("INVALID AUTHORIZATION!");
+        }
+
+
+    };
+
+    public Handler getUserHandler = (ctx) -> {
+
+        // gets the current user based on the web token in browser cookies
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(user, User.class);
+        ctx.result(json);
+
     };
 
     public Handler createUserHandler = (ctx) -> {
