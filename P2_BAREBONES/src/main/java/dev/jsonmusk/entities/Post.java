@@ -19,24 +19,30 @@ public class Post {
     private int liked;
     private int disliked;
 
+    private int liker;
+
+    private int[] liked_by;
+    private int[] disliked_by;
+
 
     private Timestamp date;
     private byte[] postPhoto;
 
     public Post() {
-//        this.postText = "";
-//        this.postId = 0;
-//        this.userId = 0;
-//        this.date = null;
-//        this.postPhoto = null;
     }
-    public Post(String username, int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
+
+    public Post(String postText, String username, int postId, int userId, int liked, int disliked, int liker, int[] liked_by, int[] disliked_by, Timestamp date, byte[] postPhoto) {
         this.postText = postText;
         this.username = username;
         this.postId = postId;
         this.userId = userId;
-        this.date = null;
-        this.postPhoto = null;
+        this.liked = liked;
+        this.disliked = disliked;
+        this.liker = liker;
+        this.liked_by = liked_by;
+        this.disliked_by = disliked_by;
+        this.date = date;
+        this.postPhoto = postPhoto;
     }
 
     public Post(String postText, String username){
@@ -44,18 +50,28 @@ public class Post {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "postText='" + postText + '\'' +
-                ", postId=" + postId +
-                ", username=" + username +
-                ", userId=" + userId +
-                ", liked=" + liked +
-                ", disliked=" + disliked +
-                ", date=" + date +
-                ", postPhoto=" + Arrays.toString(postPhoto) +
-                '}';
+    public int getLiker() {
+        return liker;
+    }
+
+    public void setLiker(int liker) {
+        this.liker = liker;
+    }
+
+    public int[] getLiked_by() {
+        return liked_by;
+    }
+
+    public void setLiked_by(int[] liked_by) {
+        this.liked_by = liked_by;
+    }
+
+    public int[] getDisliked_by() {
+        return disliked_by;
+    }
+
+    public void setDisliked_by(int[] disliked_by) {
+        this.disliked_by = disliked_by;
     }
 
     public void setDate(Timestamp date) {
