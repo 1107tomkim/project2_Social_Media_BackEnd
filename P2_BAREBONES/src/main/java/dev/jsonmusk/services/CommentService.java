@@ -24,5 +24,7 @@ public interface CommentService {
     boolean deleteCommentById(int id);
 
 
+    Comment getCommentByParentId();
 
+    Comment getCommentByParentId(int id);
 }

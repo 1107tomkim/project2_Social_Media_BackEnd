@@ -50,7 +50,7 @@ public class PostDAOPostgres implements PostDAO {
             rs.next();
             Post post = new Post();
             post.setPostText(rs.getString("post_text"));
-            post.setPostId(id);
+            //post.setPostId(id);
             post.setUserId(rs.getInt("createdBy"));
             post.setUsername(rs.getString("createdByName"));
             post.setDate(rs.getTimestamp("date_created"));

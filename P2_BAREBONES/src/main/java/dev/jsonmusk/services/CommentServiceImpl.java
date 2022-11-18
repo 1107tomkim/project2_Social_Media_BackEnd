@@ -2,7 +2,6 @@ package dev.jsonmusk.services;
 
 import dev.jsonmusk.entities.Comment;
 import dev.jsonmusk.repositories.CommentDAO;
-import dev.jsonmusk.repositories.PostDAO;
 
 import java.util.List;
 
@@ -44,5 +43,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteCommentById(int id) {
         return this.commentDAO.deleteCommentById(id);
+    }
+
+    @Override
+    public Comment getCommentByParentId() {
+        return null;
+    }
+
+
+    @Override
+    public Comment getCommentByParentId(int id) {
+        return this.commentDAO.getCommentByParentId(id);
     }
 }

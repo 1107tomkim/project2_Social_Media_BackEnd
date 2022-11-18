@@ -57,10 +57,14 @@ class CommentDAOTest {
         System.out.println(updatedComment);
         Assertions.assertEquals("This is edited Comment", updatedComment.getText());
     }
-//
-//    @Test
-//    void getCommentParent() {
-//    }
+
+    @Test
+    void getCommentParent() {
+        Comment gottenComment = commentDAO.getCommentByParentId(0);
+        System.out.println(gottenComment);
+        // if DAO finds it, it will exist, otherwise it will be null
+        Assertions.assertNotNull(gottenComment);
+    }
 //
 //    @Test
 //    void getCommentChildrenOfCommentId() {
@@ -70,9 +74,11 @@ class CommentDAOTest {
 //    void getCommentsOfPostId() {
 //    }
 //
-//    @Test
-//    void deleteCommentById() {
-//    }
+    @Test
+    void deleteCommentById() {
+        boolean result = commentDAO.deleteCommentById(1);
+        Assertions.assertTrue(result);
+    }
 }
 
 //package dev.jsonmusk.repositories;

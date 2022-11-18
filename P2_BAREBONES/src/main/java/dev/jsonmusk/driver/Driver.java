@@ -50,13 +50,13 @@ public class Driver {
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/api/user", userController.getUserHandler);
+        app.get("/user", userController.getUserHandler);
 
 
 
         // post stuff ---
         // Creating a new post
-        app.post("/api/post", postController.createPostHandler);
+        app.post("/post", postController.createPostHandler);
 
 
 
@@ -68,10 +68,10 @@ public class Driver {
 
 
         //Post Path
-        app.post("/api/post/{username}", postController.createPostHandler);
-        app.get("/api/post/{post_id}", postController.getPostbyIdHandler);
+        app.post("/post/{username}", postController.createPostHandler);
+        app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
-        app.get("/api/posts", postController.getFeedHandler);
+        app.get("/posts", postController.getFeedHandler);
 
 
 
@@ -80,6 +80,8 @@ public class Driver {
         app.get("/comment/{id}", commentController.getCommentByIdHandler);
         app.get("/comments/{post_id}", commentController.getAllCommentsOfPostId);
         app.put("/comment/{user_id}", commentController.updateCommentHandler);
+        app.get("/parentcomment/{comment_parent_id}", commentController.getCommentByParentIdHandler);
+        app.delete("/commentdelete/{comment_id}", commentController.deleteCommentHandler);
 
 
 
@@ -88,7 +90,7 @@ public class Driver {
 
 
         // go
-        app.start();
+        app.start(8888);
 
 
 

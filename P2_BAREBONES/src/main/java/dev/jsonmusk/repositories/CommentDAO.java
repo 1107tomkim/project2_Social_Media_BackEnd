@@ -21,4 +21,6 @@ public interface CommentDAO {
 
     boolean deleteCommentById(int id);
 
+    Comment getCommentByParentId(int id);
+
 }
