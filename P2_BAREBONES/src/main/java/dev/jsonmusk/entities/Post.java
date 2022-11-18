@@ -29,6 +29,11 @@ public class Post {
 //        this.date = null;
 //        this.postPhoto = null;
 //    }
+
+    public Post(String postText, byte[] postPhoto) {
+        this.postText = postText;
+        this.postPhoto = postPhoto;
+    }
     public Post(String username, int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
         this.postText = postText;
         this.username = username;

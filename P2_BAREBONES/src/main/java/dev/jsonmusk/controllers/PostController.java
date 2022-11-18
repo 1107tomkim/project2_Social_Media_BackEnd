@@ -13,21 +13,28 @@ public class PostController {
 
     public Handler createPostHandler = (ctx) -> {
     // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
+
+
         String json = ctx.body();
         Gson gson = new Gson();
         Post newPost = gson.fromJson(json, Post.class);
-        User userByParam = Driver.userService.getUserByUsername(newPost.getUsername());
-//        if (userByParam.isLoggedIn()){
-            newPost.setUserId(userByParam.getId());
+
+        newPost.setUsername(user.getUsername());
+        newPost.setUserId(user.getId());
+
+        try {
             Driver.postService.createPost(newPost);
-//            ctx.result("You just posted again. maybe take a break.");
-//            ctx.status(400);
-//        }
-//        else {
-//            System.out.println("please log in");
-//            ctx.result("Please log in to post");
-//            ctx.status(400);
-//        }
+            ctx.result("good");
+            ctx.status(201);
+        } catch (RuntimeException e) {
+            ctx.result(e.getMessage());
+            ctx.status(400);
+        }
+
 
     };
 
