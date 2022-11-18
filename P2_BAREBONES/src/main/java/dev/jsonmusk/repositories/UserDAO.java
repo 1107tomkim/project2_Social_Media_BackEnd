@@ -20,7 +20,6 @@ public interface UserDAO {
     //UPDATE
     User updateUser(User user);
     User login(User user);
-    User updateUserLogin(User user);
 
     User logout(User user);
 

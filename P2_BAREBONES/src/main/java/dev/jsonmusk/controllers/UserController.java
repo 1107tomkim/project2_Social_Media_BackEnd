@@ -10,40 +10,26 @@ import io.javalin.http.Handler;
 public class UserController {
 
     public Handler loginHandler = (ctx) -> {
-
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
-        //System.out.println("this is what they entered: " + user);
         User checkPassword = Driver.userService.getUserByUsername(user.getUsername());
-        //System.out.println("this is what we are expecting: " + checkPassword);
-        System.out.println(checkPassword.getPassword());
-        System.out.println(user.getPassword());
-
-        if (user.getPassword().equals(checkPassword.getPassword())){
-            // update user login
-            //
-            Driver.userService.login(user);
+        if (user.getPassword().equals(checkPassword.getPassword()) && !checkPassword.isLoggedIn()){
+            Driver.userService.login(checkPassword);
             ctx.result("something good happened");
         }
         else {
-            ctx.result("something bad");
+            ctx.result("username or password are incorrect");
         }
     };
 
     public Handler logoutHandler = (ctx) -> {
-
         String json = ctx.body();
         Gson gson = new Gson();
         User user = gson.fromJson(json, User.class);
-        System.out.println(user);
-        //String username = ctx.pathParam("username");
-        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user));
-        System.out.println(userByParam);
+        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user.getUsername()));
         if (userByParam.isLoggedIn()){
-            User fullUser = Driver.userService.getUserByUsername(String.valueOf(userByParam));
-            System.out.println("logoutHandler objects prints:  "+ fullUser);
-            Driver.userService.logout(fullUser);
+            Driver.userService.logout(userByParam);
             ctx.status(200);
             ctx.result("logged out");
         }
@@ -52,8 +38,6 @@ public class UserController {
             ctx.result("Could not log out");
         }
     };
-
-
 
     public Handler createUserHandler = (ctx) -> {
         String json = ctx.body();

@@ -119,10 +119,12 @@ public class UserDAOPostgres implements UserDAO {
         try (Connection connection = ConnectionFactory.getConnection()) {
             String sql = "update users set islogged = ? where user_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setBoolean(1, user.isLoggedIn());
+            ps.setBoolean(1, true);
             ps.setInt(2, user.getId());
 
             ps.executeUpdate();
+            System.out.println(user.getId());
+            System.out.println(user.isLoggedIn());
             System.out.println("dao Logs in");
             return user;
 
@@ -133,47 +135,23 @@ public class UserDAOPostgres implements UserDAO {
         //log in
     }
 
-    @Override
-    public User updateUserLogin(User user) {
-        try (Connection connection = ConnectionFactory.getConnection()) {
-            String sql = "update users set islogged = ? where user_id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setBoolean(1, user.isLoggedIn());
-            ps.setInt(2, user.getId());
-
-            ps.executeUpdate();
-            return user;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-        //log in
-    }
 
     @Override
     public User logout(User user) {
-        System.out.println("akjgsfkjbgfkgg");
-        System.out.println(user.isLoggedIn());
-        System.out.println(user.getId());
         try (Connection connection = ConnectionFactory.getConnection()) {
             String sql = "update users set islogged = ? where user_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-
-
             ps.setBoolean(1, user.isLoggedIn());
             ps.setInt(2, user.getId());
 
             ps.executeUpdate();
-//            ResultSet rs = ps.executeQuery();
-//            rs.next();
+
             return user;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-        //log in
     }
 
 
