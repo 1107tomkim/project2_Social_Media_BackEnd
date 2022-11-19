@@ -50,13 +50,13 @@ public class Driver {
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/api/user", userController.getUserHandler);
+        app.get("/user", userController.getUserHandler);
 
 
 
         // post stuff ---
         // Creating a new post
-        app.post("/api/post", postController.createPostHandler);
+        app.post("/post", postController.createPostHandler);
 
 
 
@@ -68,7 +68,10 @@ public class Driver {
 
 
         //Post Path
-        app.post("/api/post/{username}", postController.createPostHandler);
+        app.post("/post/", postController.createPostHandler);
+        app.post("/post/like", postController.likeHandler);
+        app.post("/post/dislike", postController.dislikeHandler);
+
         app.get("/api/post/{post_id}", postController.getPostbyIdHandler);
 
         app.get("/api/posts", postController.getFeedHandler);

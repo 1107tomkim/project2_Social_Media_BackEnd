@@ -57,6 +57,7 @@ public class PostDAOPostgres implements PostDAO {
             post.setPostPhoto(rs.getBytes("post_photo"));
             post.setLiked(rs.getInt("liked"));
             post.setDisliked(rs.getInt("disliked"));
+
             return post;
         }
         catch (SQLException e){
@@ -116,6 +117,39 @@ public class PostDAOPostgres implements PostDAO {
         return null;
     }
 
+    @Override
+    public Post likePost(Post post) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "update posts set liked_by = array_append(liked_by, ?) where post_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getLiker());
+            ps.setInt(2, post.getPostId());
+
+            ps.executeUpdate();
+            return post;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Post dislikePost(Post post) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "update posts set disliked_by = array_append(disliked_by, ?) where post_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getLiker());
+            ps.setInt(2, post.getPostId());
+
+            ps.executeUpdate();
+            return post;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public boolean deletePostById(int id) {
         // delete post from db

@@ -26,6 +26,11 @@ public interface PostDAO {
     //UPDATE
     Post updatePost(Post post);
 
+    Post likePost(Post post);
+
+    Post dislikePost(Post post);
+
+
     //DELETE
 
     boolean deletePostById(int id);

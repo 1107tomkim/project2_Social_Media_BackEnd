@@ -68,4 +68,44 @@ public class PostController {
         }
     };
 
+    public Handler likeHandler = (ctx) -> {
+        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+        String json = ctx.body();
+        Gson gson = new Gson();
+        Post likePost = gson.fromJson(json, Post.class);
+        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
+        fullPost.setLiker(user.getId());
+        System.out.println(fullPost);
+        try{
+            Driver.postService.likePost(fullPost);
+        }catch (RuntimeException e){
+            System.out.println(e);
+        }
+
+
+    };
+    public Handler dislikeHandler = (ctx) -> {
+        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
+        String json = ctx.body();
+        Gson gson = new Gson();
+        Post likePost = gson.fromJson(json, Post.class);
+
+        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
+        fullPost.setLiker(user.getId());
+        System.out.println(fullPost);
+        try{
+            Driver.postService.dislikePost(fullPost);
+        }catch (RuntimeException e){
+            System.out.println(e);
+        }
+
+
+    };
 }
