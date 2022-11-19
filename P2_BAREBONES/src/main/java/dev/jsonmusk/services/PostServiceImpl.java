@@ -45,6 +45,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post likeAmount(Post post) {
+        return this.postDAO.postAmount(post);
+    }
+
+    @Override
     public boolean deletePostById(int id) {
         return this.postDAO.deletePostById(id);
     }

@@ -150,9 +150,16 @@ public class PostDAOPostgres implements PostDAO {
         }
         return null;
     }
+
     @Override
     public boolean deletePostById(int id) {
         // delete post from db
         return false;
+    }
+
+    @Override
+    public Post postAmount(Post post) {
+
+        return null;
     }
 }

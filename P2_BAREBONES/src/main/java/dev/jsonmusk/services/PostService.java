@@ -21,6 +21,8 @@ public interface PostService {
     Post likePost(Post post);
     Post dislikePost(Post post);
 
+    Post likeAmount(Post post);
+
 
     //DELETE
 
