@@ -137,13 +137,61 @@ public class CommentDAOPostgres implements CommentDAO{
         return null;
     }
 
+
+
+    @Override
+    public Comment getCommentByParentId(int id) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "select * from comment_table where comment_parent_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            // create comment object from the attributes in the table
+            Comment gottenComment = new Comment();
+            gottenComment.setComment_id(id);
+            gottenComment.setText(rs.getString("comment_text"));
+            gottenComment.setUserId(rs.getInt("createdBy"));
+            gottenComment.setPostId(rs.getInt("comment_post_id"));
+            //Added comment_parent_id
+            gottenComment.setPostId(rs.getInt("comment_parent_id"));
+            gottenComment.setDate(rs.getTimestamp("date_created"));
+            gottenComment.setLiked(rs.getInt("liked"));
+            gottenComment.setDisliked(rs.getInt("disliked"));
+//            gottenComment.setLiked(rs.getInt("liked"));
+//            gottenComment.setDisliked(rs.getInt("disliked"));
+            // return the object if found
+            return gottenComment;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // return nothing if not found
+        return null;
+    }
+
     @Override
     public boolean deleteCommentById(int id) {
         // delete comment from db
-        return false;
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "delete from comment_table where comment_id =?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1,id);
+
+            preparedStatement.execute();
+            return true;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
+
+
 
 
 
