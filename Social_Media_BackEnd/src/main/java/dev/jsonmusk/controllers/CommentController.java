@@ -13,7 +13,7 @@ public class CommentController {
 
 
     public Handler createCommentHandler = (ctx) -> {
-
+        System.out.println("creating comment...");
         String token = ctx.cookie("jwt");
         User user = Driver.userService.getUserByAuthToken(token);
 
@@ -24,6 +24,7 @@ public class CommentController {
         newComment.setUserId(user.getId());
         Comment createdComment = Driver.commentService.createComment(newComment);
         ctx.result("comment successfully created!");
+        System.out.println("comment successfully created! :\n" + createdComment);
         ctx.status(200);
     };
 

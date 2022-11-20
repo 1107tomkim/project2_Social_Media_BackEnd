@@ -75,7 +75,7 @@ public class Driver {
         //Comment Path
         app.get("/api/comments/{post_id}", commentController.getAllCommentsOfPostId); //added /api so frontend can reach
 
-        app.post("/comment", commentController.createCommentHandler);
+        app.post("/api/comment", commentController.createCommentHandler);
         app.get("/comment/{id}", commentController.getCommentByIdHandler);
 
         app.put("/comment/{user_id}", commentController.updateCommentHandler);
