@@ -186,7 +186,6 @@ public class PostDAOPostgres implements PostDAO {
 
     @Override
     public boolean checkLiked(Post post) {
-        //System.out.println("you got here");
         System.out.println(post.getPostId());
         System.out.println(post.getLiker());
         try(Connection connection = ConnectionFactory.getConnection()){
@@ -198,12 +197,7 @@ public class PostDAOPostgres implements PostDAO {
             ResultSet rs = ps.executeQuery();
             rs.next();
 
-            if(rs.getBoolean("exists")){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return rs.getBoolean("exists");
         }
         catch (SQLException e){
             e.printStackTrace();
