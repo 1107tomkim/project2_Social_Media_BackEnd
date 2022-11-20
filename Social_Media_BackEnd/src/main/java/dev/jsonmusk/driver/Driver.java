@@ -43,15 +43,15 @@ public class Driver {
 
         //Creating new users
         app.post("/create", userController.createUserHandler);
-        app.post("/api/logout", userController.logoutHandler);  //added /api so frontend can reach
+        app.post("/logout", userController.logoutHandler);  //added /api so frontend can reach
 
 
         //Restricting access to ('/api') routes via an "authorize handler"
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/api/user", userController.getUserHandler);  //added /api so frontend can reach
-        app.get("/api/user/{id}", userController.getUserByIdHandler); // get user by id
+        app.get("/user", userController.getUserHandler);  //added /api so frontend can reach
+        app.get("/user/{id}", userController.getUserByIdHandler); // get user by id
 
 
         // post stuff ---
@@ -65,7 +65,9 @@ public class Driver {
 
 
         //Post Path
-        app.post("/post/{username}", postController.createPostHandler);
+        app.post("/post", postController.createPostHandler);
+        app.post("/post/like", postController.likeHandler);
+        app.post("/post/dislike", postController.dislikeHandler);
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
         app.get("/api/posts", postController.getFeedHandler);  //added /api so frontend can reach

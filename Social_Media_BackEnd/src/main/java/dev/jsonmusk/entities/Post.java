@@ -16,19 +16,32 @@ public class Post {
 
     private int liked;
     private int disliked;
+    private int liker;
+
+    private int[] liked_by;
+
+    public Post(String postText, String username, int postId, int userId, int liked, int disliked, int liker, int[] liked_by, int[] disliked_by, Timestamp date, byte[] postPhoto) {
+        this.postText = postText;
+        this.username = username;
+        this.postId = postId;
+        this.userId = userId;
+        this.liked = liked;
+        this.disliked = disliked;
+        this.liker = liker;
+        this.liked_by = liked_by;
+        this.disliked_by = disliked_by;
+        this.date = date;
+        this.postPhoto = postPhoto;
+    }
+
+    private int[] disliked_by;
 
     private Timestamp date;
     private byte[] postPhoto;
 
     public Post() {
     }
-//    public Post(int userId, int postId, String postText, Timestamp date, byte[] postPhoto) {
-//        this.postText = postText;
-//        this.postId = postId;
-//        this.userId = userId;
-//        this.date = null;
-//        this.postPhoto = null;
-//    }
+
 
     public Post(String postText, byte[] postPhoto) {
         this.postText = postText;
@@ -49,20 +62,46 @@ public class Post {
     }
 
 
+    public int getLiker() {
+        return liker;
+    }
+
+    public void setLiker(int liker) {
+        this.liker = liker;
+    }
+
+    public int[] getLiked_by() {
+        return liked_by;
+    }
+
+    public void setLiked_by(int[] liked_by) {
+        this.liked_by = liked_by;
+    }
+
+    public int[] getDisliked_by() {
+        return disliked_by;
+    }
+
+    public void setDisliked_by(int[] disliked_by) {
+        this.disliked_by = disliked_by;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "postText='" + postText + '\'' +
+                ", username='" + username + '\'' +
                 ", postId=" + postId +
-                ", username=" + username +
                 ", userId=" + userId +
                 ", liked=" + liked +
                 ", disliked=" + disliked +
+                ", liker=" + liker +
+                ", liked_by=" + Arrays.toString(liked_by) +
+                ", disliked_by=" + Arrays.toString(disliked_by) +
                 ", date=" + date +
                 ", postPhoto=" + Arrays.toString(postPhoto) +
                 '}';
     }
-
 
     public String getUsername() {
         return username;
