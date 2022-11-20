@@ -43,25 +43,22 @@ public class Driver {
 
         //Creating new users
         app.post("/create", userController.createUserHandler);
-        app.post("/logout", userController.logoutHandler);
+        app.post("/api/logout", userController.logoutHandler);  //added /api so frontend can reach
 
 
         //Restricting access to ('/api') routes via an "authorize handler"
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/user", userController.getUserHandler);
-
+        app.get("/api/user", userController.getUserHandler);  //added /api so frontend can reach
+        app.get("/api/user/{id}", userController.getUserByIdHandler); // get user by id
 
 
         // post stuff ---
         // Creating a new post
-        app.post("/post", postController.createPostHandler);
+        app.post("/api/post", postController.createPostHandler);  //added /api so frontend can reach
 
 
-
-
-     //   app.get("/user/{id}", userController.getUserByIdHandler);
      //   app.put("/user", userController.updateUserHandler);
 
 
@@ -71,14 +68,16 @@ public class Driver {
         app.post("/post/{username}", postController.createPostHandler);
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
-        app.get("/posts", postController.getFeedHandler);
+        app.get("/api/posts", postController.getFeedHandler);  //added /api so frontend can reach
 
 
 
         //Comment Path
+        app.get("/api/comments/{post_id}", commentController.getAllCommentsOfPostId); //added /api so frontend can reach
+
         app.post("/comment", commentController.createCommentHandler);
         app.get("/comment/{id}", commentController.getCommentByIdHandler);
-        app.get("/comments/{post_id}", commentController.getAllCommentsOfPostId);
+
         app.put("/comment/{user_id}", commentController.updateCommentHandler);
         app.get("/parentcomment/{comment_parent_id}", commentController.getCommentByParentIdHandler);
         app.delete("/commentdelete/{comment_id}", commentController.deleteCommentHandler);
@@ -90,7 +89,7 @@ public class Driver {
 
 
         // go
-        app.start(8888);
+        app.start();    // hika 8888
 
 
 

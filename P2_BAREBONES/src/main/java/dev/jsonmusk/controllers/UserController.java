@@ -23,30 +23,9 @@ public class UserController {
                 , true, 1, true, null, null, SameSite.LAX);
         ctx.cookie(cookie);
 
-//        User checkPassword = Driver.userService.getUserByUsername(user.getUsername());
-//        if (user.getPassword().equals(checkPassword.getPassword()) && !checkPassword.isLoggedIn()){
-//            Driver.userService.login(checkPassword);
-//            ctx.result("something good happened");
-//        }
-//        else {
-//            ctx.result("username or password are incorrect");
-//        }
     };
 
     public Handler logoutHandler = (ctx) -> {
-        String json = ctx.body();
-        Gson gson = new Gson();
-        User passedUser = gson.fromJson(json, User.class);
-//        User userByParam = Driver.userService.getUserByUsername(String.valueOf(user.getUsername()));
-//        if (userByParam.isLoggedIn()){
-//            Driver.userService.logout(userByParam);
-//            ctx.status(200);
-//            ctx.result("logged out");
-//        }
-//        else{
-//            ctx.status(400);
-//            ctx.result("Could not log out");
-//        }
 
         String token = ctx.cookie("jwt");
         User user = Driver.userService.getUserByAuthToken(token);
@@ -113,6 +92,7 @@ public class UserController {
         ctx.result(json);
 
     };
+
 
     public Handler createUserHandler = (ctx) -> {
         String json = ctx.body();
