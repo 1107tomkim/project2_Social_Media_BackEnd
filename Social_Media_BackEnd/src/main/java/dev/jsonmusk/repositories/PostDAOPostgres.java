@@ -186,8 +186,28 @@ public class PostDAOPostgres implements PostDAO {
 
     @Override
     public boolean checkLiked(Post post) {
-        System.out.println("you got here");
-        System.out.println(post);
+        //System.out.println("you got here");
+        System.out.println(post.getPostId());
+        System.out.println(post.getLiker());
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "select exists(select from posts where post_id= ? and (?=any(liked_by) or ?=any(disliked_by)))";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getPostId());
+            ps.setInt(2, post.getLiker());
+            ps.setInt(3, post.getLiker());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            if(rs.getBoolean("exists")){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
         return false;
     }
 }

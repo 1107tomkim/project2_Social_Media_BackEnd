@@ -83,11 +83,20 @@ public class PostController {
         fullPost.setLiker(user.getId());
         Driver.postService.checkLiked(fullPost);
         System.out.println(fullPost);
-        try{
-            Driver.postService.likePost(fullPost);
-        }catch (RuntimeException e){
-            System.out.println(e);
+        if(!Driver.postService.checkLiked(fullPost)){
+            try{
+                Driver.postService.likePost(fullPost);
+                ctx.result("you liked this poost");
+                ctx.status(200);
+            }catch (RuntimeException e){
+                System.out.println(e);
+            }
         }
+        else {
+            ctx.result("you cant do that");
+            ctx.status(400);
+        }
+
 
 
     };
@@ -106,12 +115,18 @@ public class PostController {
         Driver.postService.checkLiked(fullPost);
 
         System.out.println(fullPost);
-        try{
-            Driver.postService.dislikePost(fullPost);
-        }catch (RuntimeException e){
-            System.out.println(e);
+        if(!Driver.postService.checkLiked(fullPost)) {
+            try {
+                Driver.postService.dislikePost(fullPost);
+                ctx.result("you disliked this poost");
+                ctx.status(200);
+            } catch (RuntimeException e) {
+                System.out.println(e);
+            }
+        } else {
+            ctx.result("you cant do that");
+            ctx.status(400);
         }
-
 
     };
 
