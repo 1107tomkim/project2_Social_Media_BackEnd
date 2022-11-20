@@ -72,7 +72,7 @@ public class Driver {
         app.post("/post/like", postController.likeHandler);
         app.post("/post/dislike", postController.dislikeHandler);
 
-        app.get("/api/post/{post_id}", postController.getPostbyIdHandler);
+        app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
         app.get("/api/posts", postController.getFeedHandler);
 

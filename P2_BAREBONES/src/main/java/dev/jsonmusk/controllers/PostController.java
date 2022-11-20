@@ -41,6 +41,9 @@ public class PostController {
     public Handler getPostbyIdHandler = (ctx) -> {
         int id = Integer.parseInt(ctx.pathParam("post_id"));
         Post gottenPost = Driver.postService.getPostById(id);
+        Post postLikes = Driver.postService.likeAmount(gottenPost);
+        gottenPost.setDisliked(postLikes.getDisliked());
+        gottenPost.setLiked(postLikes.getLiked());
         if (gottenPost != null) {
             Gson gson = new Gson();
             ctx.status(200);
@@ -78,6 +81,7 @@ public class PostController {
         Post likePost = gson.fromJson(json, Post.class);
         Post fullPost = Driver.postService.getPostById(likePost.getPostId());
         fullPost.setLiker(user.getId());
+        Driver.postService.checkLiked(fullPost);
         System.out.println(fullPost);
         try{
             Driver.postService.likePost(fullPost);
@@ -99,6 +103,8 @@ public class PostController {
 
         Post fullPost = Driver.postService.getPostById(likePost.getPostId());
         fullPost.setLiker(user.getId());
+        Driver.postService.checkLiked(fullPost);
+
         System.out.println(fullPost);
         try{
             Driver.postService.dislikePost(fullPost);

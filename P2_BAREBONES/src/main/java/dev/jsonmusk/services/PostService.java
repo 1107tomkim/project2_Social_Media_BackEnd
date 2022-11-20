@@ -22,6 +22,7 @@ public interface PostService {
     Post dislikePost(Post post);
 
     Post likeAmount(Post post);
+    boolean checkLiked(Post post);
 
 
     //DELETE

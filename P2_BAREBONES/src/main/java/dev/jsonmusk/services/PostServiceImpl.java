@@ -46,7 +46,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post likeAmount(Post post) {
-        return this.postDAO.postAmount(post);
+        return this.postDAO.likeAmount(post);
+    }
+
+    @Override
+    public boolean checkLiked(Post post) {
+        if (this.postDAO.checkLiked(post)){
+            System.out.println("this is the PostImpl function firing true");
+            return true;
+        }else {
+            System.out.println("this is the PostImpl function firing false");
+
+            return false;
+        }
     }
 
     @Override

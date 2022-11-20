@@ -36,5 +36,7 @@ public interface PostDAO {
     boolean deletePostById(int id);
 
 
-    Post postAmount(Post post);
+    Post likeAmount(Post post);
+
+    boolean checkLiked(Post post);
 }
