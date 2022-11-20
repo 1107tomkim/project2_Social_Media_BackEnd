@@ -41,6 +41,9 @@ public class PostController {
     public Handler getPostbyIdHandler = (ctx) -> {
         int id = Integer.parseInt(ctx.pathParam("post_id"));
         Post gottenPost = Driver.postService.getPostById(id);
+        Post postLikes = Driver.postService.likeAmount(gottenPost);
+        gottenPost.setDisliked(postLikes.getDisliked());
+        gottenPost.setLiked(postLikes.getLiked());
         if (gottenPost != null) {
             Gson gson = new Gson();
             ctx.status(200);
@@ -66,6 +69,50 @@ public class PostController {
             ctx.result("ERROR!! CAN NOT FIND FEED!!");
             ctx.status(400);
         }
+    };
+
+    public Handler likeHandler = (ctx) -> {
+        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+        String json = ctx.body();
+        Gson gson = new Gson();
+        Post likePost = gson.fromJson(json, Post.class);
+        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
+        fullPost.setLiker(user.getId());
+        Driver.postService.checkLiked(fullPost);
+        System.out.println(fullPost);
+        try{
+            Driver.postService.likePost(fullPost);
+        }catch (RuntimeException e){
+            System.out.println(e);
+        }
+
+
+    };
+    public Handler dislikeHandler = (ctx) -> {
+        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
+        String json = ctx.body();
+        Gson gson = new Gson();
+        Post likePost = gson.fromJson(json, Post.class);
+
+        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
+        fullPost.setLiker(user.getId());
+        Driver.postService.checkLiked(fullPost);
+
+        System.out.println(fullPost);
+        try{
+            Driver.postService.dislikePost(fullPost);
+        }catch (RuntimeException e){
+            System.out.println(e);
+        }
+
+
     };
 
 }

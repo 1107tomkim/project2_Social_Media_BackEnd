@@ -36,7 +36,7 @@ public class PostDAOPostgres implements PostDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            return null;
+        return null;
     }
 
     @Override
@@ -50,13 +50,14 @@ public class PostDAOPostgres implements PostDAO {
             rs.next();
             Post post = new Post();
             post.setPostText(rs.getString("post_text"));
-            //post.setPostId(id);
+            post.setPostId(id);
             post.setUserId(rs.getInt("createdBy"));
             post.setUsername(rs.getString("createdByName"));
             post.setDate(rs.getTimestamp("date_created"));
             post.setPostPhoto(rs.getBytes("post_photo"));
             post.setLiked(rs.getInt("liked"));
             post.setDisliked(rs.getInt("disliked"));
+
             return post;
         }
         catch (SQLException e){
@@ -117,8 +118,76 @@ public class PostDAOPostgres implements PostDAO {
     }
 
     @Override
+    public Post likePost(Post post) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "update posts set liked_by = array_append(liked_by, ?) where post_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getLiker());
+            ps.setInt(2, post.getPostId());
+
+            ps.executeUpdate();
+            return post;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Post dislikePost(Post post) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "update posts set disliked_by = array_append(disliked_by, ?) where post_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getLiker());
+            ps.setInt(2, post.getPostId());
+
+            ps.executeUpdate();
+            return post;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public boolean deletePostById(int id) {
         // delete post from db
+        return false;
+    }
+
+    @Override
+    public Post likeAmount(Post post) {
+        //System.out.println(post);
+        try(Connection connection = ConnectionFactory.getConnection()){
+            //String sql = "select cardinality(liked_by) from posts where post_id = 1";
+            String sql = "select array_length(liked_by, 1) as liked, array_length(disliked_by, 1) as disliked from posts where post_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, post.getPostId());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            //System.out.println("got this far");
+            //System.out.println(rs.getInt("liked"));
+            //System.out.println(rs.getInt("disliked"));
+            Post post2 = new Post();
+            post2.setLiked(rs.getInt("liked"));
+            post2.setDisliked(rs.getInt("disliked"));
+
+            return post2;
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean checkLiked(Post post) {
+        System.out.println("you got here");
+        System.out.println(post);
         return false;
     }
 }

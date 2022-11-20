@@ -18,6 +18,12 @@ public interface PostService {
 
     //UPDATE
     Post updatePost(Post post);
+    Post likePost(Post post);
+    Post dislikePost(Post post);
+
+    Post likeAmount(Post post);
+    boolean checkLiked(Post post);
+
 
     //DELETE
 
