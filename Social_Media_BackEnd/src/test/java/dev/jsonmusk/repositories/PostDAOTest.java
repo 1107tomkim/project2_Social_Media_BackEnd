@@ -18,6 +18,8 @@ class PostDAOTest {
     void createPost() {
         Post newPost = new Post();
         newPost.setUserId(1);
+        newPost.setPostText("text");
+        newPost.setUsername("creator");
         Post savedPost = postDAO.createPost(newPost);
         Assertions.assertNotNull(savedPost);
     }
@@ -52,4 +54,18 @@ class PostDAOTest {
     void deletePostById() {
 
     }
+
+    @Test
+    void likePost() {
+        Post newPost = postDAO.getPostById(9);
+        newPost.setLiker(23);
+        System.out.println(newPost);
+     //   postDAO.likePost(newPost);
+        Post likedPost = postDAO.getPostById(9);
+        System.out.println(likedPost);
+        int[] intarr = likedPost.getLiked_by();
+        int last = intarr[intarr.length-1];
+        Assertions.assertEquals(23, last);
+    }
+
 }
