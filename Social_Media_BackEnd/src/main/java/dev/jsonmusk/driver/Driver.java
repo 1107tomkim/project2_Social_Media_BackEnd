@@ -50,8 +50,8 @@ public class Driver {
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/user", userController.getUserHandler);  //added /api so frontend can reach
-        app.get("/user/{id}", userController.getUserByIdHandler); // get user by id
+        app.get("/api/user", userController.getUserHandler);  //added /api so frontend can reach
+        app.get("/api/user/{id}", userController.getUserByIdHandler); // get user by id
 
 
         // post stuff ---
