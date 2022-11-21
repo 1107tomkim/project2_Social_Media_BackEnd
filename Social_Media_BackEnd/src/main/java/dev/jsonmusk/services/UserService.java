@@ -28,6 +28,8 @@ public interface UserService {
 
     User logout(User user);
 
+    List<User> searchUsers(User user);
+
     //DELETE
 
 

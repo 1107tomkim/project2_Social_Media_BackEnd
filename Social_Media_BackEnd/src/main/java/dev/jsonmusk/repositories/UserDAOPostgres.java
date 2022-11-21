@@ -94,6 +94,31 @@ public class UserDAOPostgres implements UserDAO {
     }
 
     @Override
+    public List<User> searchUser(User user) {
+
+        System.out.println(user);
+        String a = user.getUsername()+"%";
+        System.out.println(a);
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "select * from users where username like ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, a);
+            ResultSet rs = ps.executeQuery();
+            List<User> users = new ArrayList<>();
+            while(rs.next()){
+                User user1 = new User();
+                user1.setUsername(rs.getString("username"));
+                users.add(user1);
+            }
+            return users;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public User updateUser(User user) {
         // take the user in parameter and update the corresponding user(id) in db
         try (Connection connection = ConnectionFactory.getConnection()) {
