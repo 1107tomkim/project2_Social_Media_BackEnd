@@ -69,60 +69,78 @@ public class PostController {
 
     public Handler likeHandler = (ctx) -> {
         // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+        int postId = Integer.parseInt(ctx.pathParam("post_id"));
 
         String token = ctx.cookie("jwt");
         User user = Driver.userService.getUserByAuthToken(token);
-        String json = ctx.body();
-        Gson gson = new Gson();
-        Post likePost = gson.fromJson(json, Post.class);
-        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
-        fullPost.setLiker(user.getId());
-        Driver.postService.checkLiked(fullPost);
-        System.out.println(fullPost);
-        if(!Driver.postService.checkLiked(fullPost)){
+
+        Post likePost = Driver.postService.getPostById(postId);
+
+      //  likePost.setLiker(user.getId());
+      //  Driver.postService.checkLiked(likePost);
+      //  System.out.println(likePost);
+     //   if(!Driver.postService.checkLiked(likePost)){
             try{
-                Driver.postService.likePost(fullPost);
-                ctx.result("you liked this poost");
-                ctx.status(200);
+                Post likedPost = Driver.postService.likePost(likePost, user);
+                if (likedPost == null){
+                    ctx.result("unable to like post");
+                    ctx.status(400);
+                } else {
+                    ctx.result("you liked this post");
+                    ctx.status(200);
+                }
             }catch (RuntimeException e){
-                System.out.println(e);
+               e.printStackTrace();
+               ctx.status(400);
             }
-        }
-        else {
-            ctx.result("you cant do that");
-            ctx.status(400);
-        }
+       // }
+    //    else {
+    //        ctx.result("you cant do that");
+    //        ctx.status(400);
+    //    }
 
 
 
     };
     public Handler dislikeHandler = (ctx) -> {
         // authorization done by routes ("/api/*"); no user login checking logic is necessary here
+        int postId = Integer.parseInt(ctx.pathParam("post_id"));
 
         String token = ctx.cookie("jwt");
         User user = Driver.userService.getUserByAuthToken(token);
 
-        String json = ctx.body();
-        Gson gson = new Gson();
-        Post likePost = gson.fromJson(json, Post.class);
+        Post dislikePost = Driver.postService.getPostById(postId);
 
-        Post fullPost = Driver.postService.getPostById(likePost.getPostId());
-        fullPost.setLiker(user.getId());
-        Driver.postService.checkLiked(fullPost);
-
-        System.out.println(fullPost);
-        if(!Driver.postService.checkLiked(fullPost)) {
-            try {
-                Driver.postService.dislikePost(fullPost);
-                ctx.result("you disliked this poost");
+        try{
+            Post dislikedPost = Driver.postService.dislikePost(dislikePost, user);
+            if (dislikedPost == null){
+                ctx.result("unable to dislike post");
+                ctx.status(400);
+            } else {
+                ctx.result("you liked this post");
                 ctx.status(200);
-            } catch (RuntimeException e) {
-                System.out.println(e);
             }
-        } else {
-            ctx.result("you cant do that");
+        }catch (RuntimeException e){
+            e.printStackTrace();
             ctx.status(400);
         }
+
+//        dislikePost.setLiker(user.getId());
+//        Driver.postService.checkLiked(dislikePost);
+//
+//        System.out.println(dislikePost);
+//        if(!Driver.postService.checkLiked(dislikePost)) {
+//            try {
+//                Driver.postService.dislikePost(dislikePost);
+//                ctx.result("you disliked this poost");
+//                ctx.status(200);
+//            } catch (RuntimeException e) {
+//                System.out.println(e);
+//            }
+//        } else {
+//            ctx.result("you cant do that");
+//            ctx.status(400);
+//        }
 
     };
 

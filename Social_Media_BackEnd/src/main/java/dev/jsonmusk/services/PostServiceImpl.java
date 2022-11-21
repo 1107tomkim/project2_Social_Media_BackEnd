@@ -3,9 +3,12 @@ package dev.jsonmusk.services;
 import dev.jsonmusk.driver.Driver;
 import dev.jsonmusk.entities.Comment;
 import dev.jsonmusk.entities.Post;
+import dev.jsonmusk.entities.User;
 import dev.jsonmusk.repositories.PostDAO;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PostServiceImpl implements PostService {
 
@@ -35,13 +38,40 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post likePost(Post post) {
-        return this.postDAO.likePost(post);
+    public Post likePost(Post post, User user) {
+        if (user == null)
+            return null;
+
+        int[] likersUserIds = post.getLiked_by();
+        int[] dislikersUserIds = post.getDisliked_by();
+        boolean hasAlreadyLiked = Arrays.stream(likersUserIds).anyMatch(i -> i == user.getId());
+        boolean hasAlreadyDisliked = Arrays.stream(dislikersUserIds).anyMatch(i -> i == user.getId());
+
+        if (!hasAlreadyLiked && !hasAlreadyDisliked) {
+            return this.postDAO.likePost(post);
+        } else {
+            return null;
+        }
+
+
     }
 
     @Override
-    public Post dislikePost(Post post) {
-        return this.postDAO.dislikePost(post);
+    public Post dislikePost(Post post, User user) {
+        if (user == null)
+            return null;
+
+        int[] likersUserIds = post.getLiked_by();
+        int[] dislikersUserIds = post.getDisliked_by();
+        boolean hasAlreadyLiked = Arrays.stream(likersUserIds).anyMatch(i -> i == user.getId());
+        boolean hasAlreadyDisliked = Arrays.stream(dislikersUserIds).anyMatch(i -> i == user.getId());
+
+        if (!hasAlreadyLiked && !hasAlreadyDisliked) {
+            return this.postDAO.dislikePost(post);
+        } else {
+            return null;
+        }
+
     }
 
     @Override

@@ -66,11 +66,12 @@ public class Driver {
 
         //Post Path
         app.post("/post", postController.createPostHandler);
-        app.post("/post/like", postController.likeHandler);
-        app.post("/post/dislike", postController.dislikeHandler);
+        app.post("/post/like/{post_id}", postController.likeHandler);
+        app.post("/post/dislike/{post_id}", postController.dislikeHandler);
         app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
         app.get("/api/posts", postController.getFeedHandler);  //added /api so frontend can reach
+
 
 
 
