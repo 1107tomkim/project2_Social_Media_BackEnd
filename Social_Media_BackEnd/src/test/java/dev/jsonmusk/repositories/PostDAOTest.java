@@ -60,7 +60,7 @@ class PostDAOTest {
         Post newPost = postDAO.getPostById(9);
         newPost.setLiker(23);
         System.out.println(newPost);
-     //   postDAO.likePost(newPost);
+        postDAO.likePost(newPost);
         Post likedPost = postDAO.getPostById(9);
         System.out.println(likedPost);
         int[] intarr = likedPost.getLiked_by();

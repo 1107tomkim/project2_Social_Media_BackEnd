@@ -6,6 +6,7 @@ import dev.jsonmusk.util.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -74,16 +75,14 @@ public class PostDAOPostgres implements PostDAO {
 
     int[] ArrayToIntArray (Array arr) {
         String str = arr.toString();
-        int newlen = str.length();
-        newlen -= 2;
-        newlen -= (newlen-1)/2;
-        int[] intArr = new int[newlen];
-        int counter = 0;
-        for (int i = 1; i < str.length() - 1; i+=2) {
-            System.out.println(i + ": " + Integer.parseInt(String.valueOf(str.charAt(i))));
-            intArr[counter] = Integer.parseInt(String.valueOf(str.charAt(i)));
+        str = str.replace("{", "");
+        str = str.replace("}", "");
 
-            counter++;
+
+        String[] strArr = str.split(",");
+        int[] intArr = new int[strArr.length - 1];
+        for (int i = 0; i < strArr.length - 1; i++) {
+            intArr[i] = Integer.parseInt(String.valueOf(strArr[i]));
         }
         return intArr;
     }
