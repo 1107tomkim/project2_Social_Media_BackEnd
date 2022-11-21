@@ -159,24 +159,16 @@ public class PostDAOPostgres implements PostDAO {
 
     @Override
     public Post likeAmount(Post post) {
-        //System.out.println(post);
         try(Connection connection = ConnectionFactory.getConnection()){
-            //String sql = "select cardinality(liked_by) from posts where post_id = 1";
             String sql = "select array_length(liked_by, 1) as liked, array_length(disliked_by, 1) as disliked from posts where post_id = ?";
-
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, post.getPostId());
             ResultSet rs = ps.executeQuery();
             rs.next();
-            //System.out.println("got this far");
-            //System.out.println(rs.getInt("liked"));
-            //System.out.println(rs.getInt("disliked"));
             Post post2 = new Post();
             post2.setLiked(rs.getInt("liked"));
             post2.setDisliked(rs.getInt("disliked"));
-
             return post2;
-
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -186,7 +178,6 @@ public class PostDAOPostgres implements PostDAO {
 
     @Override
     public boolean checkLiked(Post post) {
-        //System.out.println("you got here");
         System.out.println(post.getPostId());
         System.out.println(post.getLiker());
         try(Connection connection = ConnectionFactory.getConnection()){
@@ -197,13 +188,7 @@ public class PostDAOPostgres implements PostDAO {
             ps.setInt(3, post.getLiker());
             ResultSet rs = ps.executeQuery();
             rs.next();
-
-            if(rs.getBoolean("exists")){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return rs.getBoolean("exists");
         }
         catch (SQLException e){
             e.printStackTrace();

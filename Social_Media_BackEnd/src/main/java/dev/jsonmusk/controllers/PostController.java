@@ -13,12 +13,8 @@ public class PostController {
 
     public Handler createPostHandler = (ctx) -> {
     // authorization done by routes ("/api/*"); no user login checking logic is necessary here
-
         String token = ctx.cookie("jwt");
         User user = Driver.userService.getUserByAuthToken(token);
-
-
-
         String json = ctx.body();
         Gson gson = new Gson();
         Post newPost = gson.fromJson(json, Post.class);
