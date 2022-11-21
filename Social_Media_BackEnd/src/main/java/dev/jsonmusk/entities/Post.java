@@ -19,6 +19,7 @@ public class Post {
     private int liker;
 
     private int[] liked_by;
+    private int[] disliked_by;
 
     public Post(String postText, String username, int postId, int userId, int liked, int disliked, int liker, int[] liked_by, int[] disliked_by, Timestamp date, byte[] postPhoto) {
         this.postText = postText;
@@ -34,7 +35,6 @@ public class Post {
         this.postPhoto = postPhoto;
     }
 
-    private int[] disliked_by;
 
     private Timestamp date;
     private byte[] postPhoto;

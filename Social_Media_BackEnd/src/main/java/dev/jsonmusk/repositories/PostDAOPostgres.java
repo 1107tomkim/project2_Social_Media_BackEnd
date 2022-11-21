@@ -7,6 +7,7 @@ import dev.jsonmusk.util.ConnectionFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PostDAOPostgres implements PostDAO {
 
@@ -16,15 +17,15 @@ public class PostDAOPostgres implements PostDAO {
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             Timestamp newTimestamp = new Timestamp(System.currentTimeMillis());
-            String sql = "insert into posts values(default, ?, ?, ?, ?, ?, ?, ?)";
+            // INSERT INTO posts values(DEFAULT,'text7', 'username', 1, DEFAULT, NULL, '{}', default );
+            String sql = "insert into posts values(default, ?, ?, ?, ?, ?, default, default)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, post.getPostText());
             ps.setString(2, post.getUsername());
             ps.setInt(3, post.getUserId());
             ps.setTimestamp(4, newTimestamp);
             ps.setBytes(5, post.getPostPhoto());
-            ps.setInt(6, 0);
-            ps.setInt(7, 0);
+
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
@@ -55,8 +56,12 @@ public class PostDAOPostgres implements PostDAO {
             post.setUsername(rs.getString("createdByName"));
             post.setDate(rs.getTimestamp("date_created"));
             post.setPostPhoto(rs.getBytes("post_photo"));
-            post.setLiked(rs.getInt("liked"));
-            post.setDisliked(rs.getInt("disliked"));
+
+            Array arr = rs.getArray("liked_by");
+            post.setLiked_by(ArrayToIntArray(arr));
+
+            arr = rs.getArray("disliked_by");
+            post.setDisliked_by(ArrayToIntArray(arr));
 
             return post;
         }
@@ -66,6 +71,22 @@ public class PostDAOPostgres implements PostDAO {
         return null;
     }
 
+
+    int[] ArrayToIntArray (Array arr) {
+        String str = arr.toString();
+        int newlen = str.length();
+        newlen -= 2;
+        newlen -= (newlen-1)/2;
+        int[] intArr = new int[newlen];
+        int counter = 0;
+        for (int i = 1; i < str.length() - 1; i+=2) {
+            System.out.println(i + ": " + Integer.parseInt(String.valueOf(str.charAt(i))));
+            intArr[counter] = Integer.parseInt(String.valueOf(str.charAt(i)));
+
+            counter++;
+        }
+        return intArr;
+    }
     @Override
     public List<Post> getFeed() {
         // this returns all posts
@@ -82,8 +103,15 @@ public class PostDAOPostgres implements PostDAO {
                 post.setUsername(rs.getString("createdByName"));
                 post.setDate(rs.getTimestamp("date_created"));
                 post.setPostPhoto(rs.getBytes("post_photo"));
-                post.setLiked(rs.getInt("liked"));
-                post.setDisliked(rs.getInt("disliked"));
+
+
+                Array arr = rs.getArray("liked_by");
+                post.setLiked_by(ArrayToIntArray(arr));
+
+                arr = rs.getArray("disliked_by");
+                post.setDisliked_by(ArrayToIntArray(arr));
+
+
                 feed.add(post);
             }
             return feed;
@@ -98,15 +126,14 @@ public class PostDAOPostgres implements PostDAO {
     @Override
     public Post updatePost(Post post) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "update posts set post_text = ?, createdby = ?, date_created = ?, post_photo = ?, liked = ?, disliked = ? where post_id = ?";
+           // update posts set liked_by = array_append(liked_by, 3) where post_id = 1;
+            String sql = "update posts set post_text = ?, createdby = ?, date_created = ?, post_photo = ? where post_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, post.getPostText());
             ps.setInt(2, post.getUserId());
             ps.setTimestamp(3, post.getDate());
             ps.setBytes(4, post.getPostPhoto());
-            ps.setInt(5, post.getLiked());
-            ps.setInt(6, post.getDisliked());
-            ps.setInt(7, post.getPostId());
+            ps.setInt(5, post.getPostId());
             ps.executeUpdate();
 
             return post;
