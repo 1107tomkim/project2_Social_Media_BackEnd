@@ -44,22 +44,22 @@ public class Driver {
 
         //Creating new users
         app.post("/create", userController.createUserHandler);
-        app.post("/logout", userController.logoutHandler);  //added /api so frontend can reach
+        app.get("/logout", userController.logoutHandler);  //added /api so frontend can reach
 
 
         //Restricting access to ('/api') routes via an "authorize handler"
         app.before("/api/*", userController.authorizeHandler);
 
         //Getting the current user
-        app.get("/api/user", userController.getUserHandler);  //added /api so frontend can reach
-        app.get("/api/user/{id}", userController.getUserByIdHandler); // get user by id
-        app.post("/api/user", userController.updateUserHandler);
+        app.get("/user", userController.getUserHandler);  //added /api so frontend can reach
+        app.get("/user/{id}", userController.getUserByIdHandler); // get user by id
+        app.put("/updateUser", userController.updateUserHandler);
 
         // post stuff ---
         // Creating a new post
-        app.post("/api/post", postController.createPostHandler);  //added /api so frontend can reach
+//        app.post("/post", postController.createPostHandler);  //added /api so frontend can reach
 
-        app.get("/api/search", userController.searchUser);
+        app.get("/search", userController.searchUser);
      //   app.put("/user", userController.updateUserHandler);
 
 
@@ -67,20 +67,20 @@ public class Driver {
 
         //Post Path
         app.post("/post", postController.createPostHandler);
-        app.get("/api/post/like/{post_id}", postController.likeHandler);
-        app.get("/api/post/dislike/{post_id}", postController.dislikeHandler);
-        app.get("/api/post/{post_id}", postController.getPostbyIdHandler);
+        app.get("/post/like/{post_id}", postController.likeHandler);
+        app.get("/post/dislike/{post_id}", postController.dislikeHandler);
+        app.get("/post/{post_id}", postController.getPostbyIdHandler);
 
-        app.get("/api/posts", postController.getFeedHandler);  //added /api so frontend can reach
+        app.get("/posts", postController.getFeedHandler);  //added /api so frontend can reach
 
 
 
 
         //Comment Path
-        app.get("/api/comments/{post_id}", commentController.getAllCommentsOfPostId); //added /api so frontend can reach
+        app.get("/comments/{post_id}", commentController.getAllCommentsOfPostId); //added /api so frontend can reach
 
-        app.post("/api/comment", commentController.createCommentHandler);
-        app.get("/api/comment/{id}", commentController.getCommentByIdHandler);
+        app.post("/comment", commentController.createCommentHandler);
+        app.get("/comment/{id}", commentController.getCommentByIdHandler);
 
         app.put("/comment/{user_id}", commentController.updateCommentHandler);
         app.get("/parentcomment/{comment_parent_id}", commentController.getCommentByParentIdHandler);

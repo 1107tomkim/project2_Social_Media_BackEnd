@@ -14,14 +14,16 @@ public class UserDAOPostgres implements UserDAO {
     public User createUser(User user) {
         try (Connection connection = ConnectionFactory.getConnection()){
             //INSERT INTO users VALUES (DEFAULT, 'User1', 'password', 'George', 'Neilson', 'georgeyboy@office.net', FALSE);
-            String sql = "insert into users values(default, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into users values(default, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFirstname());
             ps.setString(4, user.getLastname());
             ps.setString(5, user.getEmail());
-            ps.setBoolean(6, user.isLoggedIn());
+            ps.setString(6, user.getPhone_number());
+            ps.setString(7, user.getAge_num());
+            ps.setBoolean(8, user.isLoggedIn());
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
@@ -55,6 +57,8 @@ public class UserDAOPostgres implements UserDAO {
             user.setFirstname(rs.getString("firstname"));
             user.setLastname(rs.getString("lastname"));
             user.setEmail(rs.getString("email"));
+            user.setPhone_number(rs.getString("phonenumber"));
+            user.setAge_num(rs.getString("age_num"));
             user.setLoggedIn(rs.getBoolean("islogged"));
             return user;
         }
@@ -82,6 +86,8 @@ public class UserDAOPostgres implements UserDAO {
             gottenUser.setFirstname(rs.getString("firstname"));
             gottenUser.setLastname(rs.getString("lastname"));
             gottenUser.setEmail(rs.getString("email"));
+            gottenUser.setPhone_number(rs.getString("phonenumber"));
+            gottenUser.setAge_num(rs.getString("age_num"));
             gottenUser.setLoggedIn(rs.getBoolean("isLogged"));
 
             return gottenUser;
@@ -121,15 +127,17 @@ public class UserDAOPostgres implements UserDAO {
     public User updateUser(User user) {
         // take the user in parameter and update the corresponding user(id) in db
         try (Connection connection = ConnectionFactory.getConnection()) {
-            String sql = "update users set username = ?, password = ?, firstname = ?, lastname = ?, email = ?, islogged = ? where user_id = ?";
+            String sql = "update users set username = ?, password = ?, firstname = ?, lastname = ?, email = ?, phonenumber = ?, age_num = ?, islogged = ? where user_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFirstname());
             ps.setString(4, user.getLastname());
             ps.setString(5, user.getEmail());
-            ps.setBoolean(6, user.isLoggedIn());
-            ps.setInt(7, user.getId());
+            ps.setString(6, user.getPhone_number());
+            ps.setString(7, user.getAge_num());
+            ps.setBoolean(8, user.isLoggedIn());
+            ps.setInt(9, user.getId());
 
             ps.executeUpdate();
             return user;
