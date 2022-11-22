@@ -7,6 +7,8 @@ import dev.jsonmusk.managers.TokenManager;
 import dev.jsonmusk.repositories.SessionDAO;
 import dev.jsonmusk.repositories.UserDAO;
 
+import java.util.List;
+
 
 public class UserServiceImpl implements UserService {
 
@@ -127,4 +129,9 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+
+    @Override
+    public List<User> searchUsers(User user) {
+        return this.userDAO.searchUser(user);
+    }
 }

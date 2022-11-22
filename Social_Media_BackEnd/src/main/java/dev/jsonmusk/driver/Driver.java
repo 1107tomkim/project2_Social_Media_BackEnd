@@ -22,6 +22,7 @@ public class Driver {
 
 
 
+
         Javalin app = Javalin.create(
 
                 javalinConfig -> {
@@ -58,7 +59,7 @@ public class Driver {
         // Creating a new post
         app.post("/api/post", postController.createPostHandler);  //added /api so frontend can reach
 
-
+        app.get("/api/search", userController.searchUser);
      //   app.put("/user", userController.updateUserHandler);
 
 
