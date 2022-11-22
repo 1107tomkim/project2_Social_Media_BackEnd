@@ -137,6 +137,8 @@ public class UserController {
         user.setFirstname(jsonUser.getFirstname());
         user.setLastname(jsonUser.getLastname());
         user.setEmail(jsonUser.getEmail());
+        user.setPhone_number(jsonUser.getPhone_number());
+        user.setAge_num(jsonUser.getAge_num());
 
         System.out.println(user);
 
