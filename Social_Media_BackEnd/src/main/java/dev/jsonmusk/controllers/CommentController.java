@@ -25,7 +25,7 @@ public class CommentController {
 
         newComment.setUserId(user.getId());
         Comment createdComment = Driver.commentService.createComment(newComment);
-        ctx.result("comment successfully created!");
+        ctx.result(gson.toJson(createdComment));
         System.out.println("comment successfully created! :\n" + createdComment);
         ctx.status(200);
     };

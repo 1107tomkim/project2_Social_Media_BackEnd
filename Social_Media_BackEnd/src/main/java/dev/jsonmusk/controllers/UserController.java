@@ -7,6 +7,8 @@ import dev.jsonmusk.entities.User;
 import dev.jsonmusk.repositories.UserDAO;
 import io.javalin.http.*;
 
+import java.util.List;
+
 public class UserController {
 
     public Handler loginHandler = (ctx) -> {
@@ -149,5 +151,25 @@ public class UserController {
         }
     };
 
+
+
+    public Handler searchUser = (ctx) -> {
+        String json = ctx.body();
+        Gson gson = new Gson();
+        User user = gson.fromJson(json, User.class);
+
+
+        List<User> searchList = Driver.userService.searchUsers(user);
+
+        if (searchList != null && !searchList.isEmpty()) {
+            Gson gson1 = new Gson();
+            ctx.status(200);
+            ctx.result(gson1.toJson(searchList));
+        }
+        else {
+            ctx.result("cannot find users");
+            ctx.status(400);
+        }
+    };
 
 }
