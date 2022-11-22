@@ -52,7 +52,7 @@ public class Driver {
         //Getting the current user
         app.get("/api/user", userController.getUserHandler);  //added /api so frontend can reach
         app.get("/api/user/{id}", userController.getUserByIdHandler); // get user by id
-
+        app.post("/api/user", userController.updateUserHandler);
 
         // post stuff ---
         // Creating a new post

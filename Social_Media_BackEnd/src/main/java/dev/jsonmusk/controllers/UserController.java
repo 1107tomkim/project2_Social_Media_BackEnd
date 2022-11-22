@@ -122,12 +122,31 @@ public class UserController {
     };
 
     public Handler updateUserHandler = (ctx) -> {
+        String token = ctx.cookie("jwt");
+        User user = Driver.userService.getUserByAuthToken(token);
+
         String json = ctx.body();
         Gson gson = new Gson();
-        User user = gson.fromJson(json, User.class);
+        User jsonUser = gson.fromJson(json, User.class);
+
+        System.out.println(jsonUser);
+
+        user.setUsername(jsonUser.getUsername());
+        user.setFirstname(jsonUser.getFirstname());
+        user.setLastname(jsonUser.getLastname());
+        user.setEmail(jsonUser.getEmail());
+
+        System.out.println(user);
+
         User updatedUser = Driver.userService.updateUser(user);
-        ctx.result(gson.toJson(updatedUser));
-        ctx.status(200);
+        System.out.println(updatedUser);
+        if (updatedUser != null) {
+            ctx.result(gson.toJson(updatedUser));
+            ctx.status(200);
+        } else {
+            ctx.result("Cannot change user");
+            ctx.status(400);
+        }
     };
 
 
