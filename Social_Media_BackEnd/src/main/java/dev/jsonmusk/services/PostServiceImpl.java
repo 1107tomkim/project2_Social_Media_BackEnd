@@ -42,12 +42,12 @@ public class PostServiceImpl implements PostService {
         if (user == null)
             return null;
 
+        post.setLiker(user.getId());
         int[] likersUserIds = post.getLiked_by();
-        int[] dislikersUserIds = post.getDisliked_by();
-        boolean hasAlreadyLiked = Arrays.stream(likersUserIds).anyMatch(i -> i == user.getId());
-        boolean hasAlreadyDisliked = Arrays.stream(dislikersUserIds).anyMatch(i -> i == user.getId());
+        boolean hasAlreadyLiked = Arrays.stream(likersUserIds).anyMatch(n -> n == post.getLiker());
 
-        if (!hasAlreadyLiked && !hasAlreadyDisliked) {
+
+        if (!hasAlreadyLiked) {
             return this.postDAO.likePost(post);
         } else {
             return null;
@@ -61,12 +61,11 @@ public class PostServiceImpl implements PostService {
         if (user == null)
             return null;
 
-        int[] likersUserIds = post.getLiked_by();
+        post.setLiker(user.getId());
         int[] dislikersUserIds = post.getDisliked_by();
-        boolean hasAlreadyLiked = Arrays.stream(likersUserIds).anyMatch(i -> i == user.getId());
         boolean hasAlreadyDisliked = Arrays.stream(dislikersUserIds).anyMatch(i -> i == user.getId());
 
-        if (!hasAlreadyLiked && !hasAlreadyDisliked) {
+        if (!hasAlreadyDisliked) {
             return this.postDAO.dislikePost(post);
         } else {
             return null;

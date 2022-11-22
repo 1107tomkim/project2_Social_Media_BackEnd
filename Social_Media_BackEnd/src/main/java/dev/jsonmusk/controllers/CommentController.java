@@ -21,6 +21,8 @@ public class CommentController {
         Gson gson = new Gson();
         Comment newComment = gson.fromJson(json, Comment.class);
 
+        System.out.println(newComment.toString());
+
         newComment.setUserId(user.getId());
         Comment createdComment = Driver.commentService.createComment(newComment);
         ctx.result("comment successfully created!");

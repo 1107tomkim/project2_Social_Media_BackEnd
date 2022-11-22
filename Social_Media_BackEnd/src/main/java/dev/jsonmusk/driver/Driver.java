@@ -66,9 +66,9 @@ public class Driver {
 
         //Post Path
         app.post("/post", postController.createPostHandler);
-        app.post("/post/like/{post_id}", postController.likeHandler);
-        app.post("/post/dislike/{post_id}", postController.dislikeHandler);
-        app.get("/post/{post_id}", postController.getPostbyIdHandler);
+        app.get("/api/post/like/{post_id}", postController.likeHandler);
+        app.get("/api/post/dislike/{post_id}", postController.dislikeHandler);
+        app.get("/api/post/{post_id}", postController.getPostbyIdHandler);
 
         app.get("/api/posts", postController.getFeedHandler);  //added /api so frontend can reach
 
@@ -79,7 +79,7 @@ public class Driver {
         app.get("/api/comments/{post_id}", commentController.getAllCommentsOfPostId); //added /api so frontend can reach
 
         app.post("/api/comment", commentController.createCommentHandler);
-        app.get("/comment/{id}", commentController.getCommentByIdHandler);
+        app.get("/api/comment/{id}", commentController.getCommentByIdHandler);
 
         app.put("/comment/{user_id}", commentController.updateCommentHandler);
         app.get("/parentcomment/{comment_parent_id}", commentController.getCommentByParentIdHandler);
