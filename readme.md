@@ -11,7 +11,7 @@ Backend built with Javalin and Java.
 
 ## Features
 
-- create user
+-  create user
 - post pictures and text
 - like a post
 - edit a post
@@ -60,18 +60,18 @@ Make a post
 http://localhost:4200/post
 
 ## Roadmap
--Followers/Friends
--Upload Profile picture
--Dark mode
--Youtube Links
--Notifications
--Reset Password
--Host/Join Events
--Bookmark Posts
--Auto-remove posts
--Profanity filter
--Create/Join a group/Team
--chatroom
+- Followers/Friends
+- Upload Profile picture
+- Dark mode
+- Youtube Links
+- Notifications
+- Reset Password
+- Host/Join Events
+- Bookmark Posts
+- Auto-remove posts
+- Profanity filter
+- Create/Join a group/Team
+- Chatroom
 
 
 ## Contributing
@@ -84,6 +84,6 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-unlicensed
+Unlicensed
 
 
