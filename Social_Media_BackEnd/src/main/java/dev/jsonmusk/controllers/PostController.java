@@ -68,7 +68,6 @@ public class PostController {
     };
 
     public Handler likeHandler = (ctx) -> {
-        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
         int postId = Integer.parseInt(ctx.pathParam("post_id"));
 
         String token = ctx.cookie("jwt");
@@ -76,10 +75,6 @@ public class PostController {
 
         Post likePost = Driver.postService.getPostById(postId);
 
-      //  likePost.setLiker(user.getId());
-      //  Driver.postService.checkLiked(likePost);
-      //  System.out.println(likePost);
-     //   if(!Driver.postService.checkLiked(likePost)){
             try{
                 Post likedPost = Driver.postService.likePost(likePost, user);
                 if (likedPost == null){
@@ -103,7 +98,6 @@ public class PostController {
 
     };
     public Handler dislikeHandler = (ctx) -> {
-        // authorization done by routes ("/api/*"); no user login checking logic is necessary here
         int postId = Integer.parseInt(ctx.pathParam("post_id"));
 
         String token = ctx.cookie("jwt");

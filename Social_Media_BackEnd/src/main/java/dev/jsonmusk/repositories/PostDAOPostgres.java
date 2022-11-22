@@ -74,15 +74,23 @@ public class PostDAOPostgres implements PostDAO {
 
 
     int[] ArrayToIntArray (Array arr) {
+        if (arr.toString().length() <= 2)
+            return new int[0];
+
         String str = arr.toString();
         str = str.replace("{", "");
         str = str.replace("}", "");
+        str = str.trim();
 
 
         String[] strArr = str.split(",");
-        int[] intArr = new int[strArr.length - 1];
-        for (int i = 0; i < strArr.length - 1; i++) {
-            intArr[i] = Integer.parseInt(String.valueOf(strArr[i]));
+      //  System.out.println("STRING ARRAY HAS " + strArr.length + " STRINGS");
+        int[] intArr = new int[strArr.length];
+      //  System.out.println("INTARR HAS " + intArr.length + " SPOTS");
+        for (int i = 0; i < strArr.length; i++) {
+          //  System.out.println("INDEX #" + i + " IN STRARR CONTAINS A " + strArr[i] );
+            intArr[i] = Integer.parseInt(strArr[i]);
+          //  System.out.println("INDEX #" + i + " IN INTARR NOW CONTAINS A " + intArr[i] );
         }
         return intArr;
     }
