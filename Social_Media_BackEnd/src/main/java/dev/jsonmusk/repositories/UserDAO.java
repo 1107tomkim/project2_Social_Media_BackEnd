@@ -16,7 +16,7 @@ public interface UserDAO {
     // Used to get user by their id ( In the Database)
     User getUserById(int id);
     User getUserByUsername(String username);
-    List<User> searchUser(User user);
+    List<User> searchUser(String username);
     //UPDATE
     User updateUserLogin(User user);
     User updateUser(User user);

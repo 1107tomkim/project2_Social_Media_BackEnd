@@ -14,7 +14,7 @@ public interface UserService {
     //READ
     User getUserById(int id);
     User getUserByUsername(String username);
-    List<User> searchUsers(User user);
+    List<User> searchUsers(String username);
 
     //UPDATE
     User updateUser(User user);

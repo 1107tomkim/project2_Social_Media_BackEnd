@@ -59,7 +59,7 @@ public class Driver {
         // Creating a new post
 //        app.post("/post", postController.createPostHandler);  //added /api so frontend can reach
 
-        app.get("/search", userController.searchUser);
+        app.get("/search/{username}", userController.searchUser);
      //   app.put("/user", userController.updateUserHandler);
 
 

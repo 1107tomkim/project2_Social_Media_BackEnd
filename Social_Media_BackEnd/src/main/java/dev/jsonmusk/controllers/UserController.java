@@ -156,17 +156,17 @@ public class UserController {
 
 
     public Handler searchUser = (ctx) -> {
-        String json = ctx.body();
-        Gson gson = new Gson();
-        User user = gson.fromJson(json, User.class);
+        String username = ctx.pathParam("username").trim();
+        System.out.println(username);
 
-
-        List<User> searchList = Driver.userService.searchUsers(user);
-
+        List<User> searchList = Driver.userService.searchUsers(username);
+        System.out.println("count: " + searchList.size());
+        for (User u : searchList)
+            System.out.println(u.toString());
         if (searchList != null && !searchList.isEmpty()) {
-            Gson gson1 = new Gson();
             ctx.status(200);
-            ctx.result(gson1.toJson(searchList));
+            Gson gson = new Gson();
+            ctx.result(gson.toJson(searchList));
         }
         else {
             ctx.result("cannot find users");

@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> searchUsers(User user) {
-        return this.userDAO.searchUser(user);
+    public List<User> searchUsers(String username) {
+        return this.userDAO.searchUser(username);
     }
 }

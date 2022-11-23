@@ -100,20 +100,28 @@ public class UserDAOPostgres implements UserDAO {
     }
 
     @Override
-    public List<User> searchUser(User user) {
-        System.out.println(user);
-        String a = user.getUsername()+"%";
-        System.out.println(a);
+    public List<User> searchUser(String username) {
+        if (username.length() < 1)
+            return null;
+
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from users where upper(username) like upper('?%')";
+            String sql = "select * from users where upper(username) like upper('%" + username + "%')";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, a);
+         //   ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             List<User> users = new ArrayList<>();
             while(rs.next()){
-                User user1 = new User();
-                user1.setUsername(rs.getString("username"));
-                users.add(user1);
+                User gottenUser = new User();
+                gottenUser.setId(rs.getInt("user_id"));
+                gottenUser.setUsername(rs.getString("username"));
+                gottenUser.setPassword(rs.getString("password"));
+                gottenUser.setFirstname(rs.getString("firstname"));
+                gottenUser.setLastname(rs.getString("lastname"));
+                gottenUser.setEmail(rs.getString("email"));
+                gottenUser.setPhone_number(rs.getString("phonenumber"));
+                gottenUser.setAge_num(rs.getString("age_num"));
+                gottenUser.setLoggedIn(rs.getBoolean("isLogged"));
+                users.add(gottenUser);
             }
             return users;
         }
