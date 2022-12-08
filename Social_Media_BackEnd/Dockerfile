@@ -7,4 +7,4 @@ WORKDIR /workspace
 EXPOSE 8080
 #Tell it what port to connect to
 ENTRYPOINT [ "java", "-jar", "target/ERS_Project-1.0-SNAPSHOT-jar-with-dependencies.jar" ]
-
+#that's a push
